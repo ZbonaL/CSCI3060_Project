@@ -1,0 +1,6 @@
+login
+username
+create
+new_username
+permissions
+logout
