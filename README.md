@@ -1,6 +1,6 @@
-#CSCI 3060 Project#
+# CSCI 3060 Project #
 
-##Group Members##
+## Group Members ##
 1. Leonard Zbona
 2. Sinthooran Ravinitan
 3. Danooshan Sureshkumar
