@@ -10,7 +10,8 @@
 > * Backend holds all the code for the backend of the project (Java)
 > * Tests holds all the test and results when the software is to be tested
 >   * This is the layout of our folder structure:
->  >> ```CSCI3060_Project
+```
+    CSCI3060_Project
     ├── BackEnd
     │   └── README.md
     ├── FrontEnd
@@ -42,8 +43,9 @@
             ├── 05-refund_input.txt
             ├── 06-refund_input.txt
             ├── 07-refund_input.txt
-            └── 08-refund_input.txt
-```
+            └── 08-refund_input.txt 
+```       
+  
 
 
 
