@@ -9,9 +9,8 @@
 > * FrontEnd holds the code for the front end of the project (C++)
 > * Backend holds all the code for the backend of the project (Java)
 > * Tests holds all the test and results when the software is to be tested
-
->THis is the layout of our folder structure:
-> ![FileStructure](resources/structure.png "This is an example of your layout")
+>   * This is the layout of our folder structure:
+>   ![FileStructure](resources/structure.png "This is an example of your layout")
 
 
 
