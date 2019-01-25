@@ -45,6 +45,3 @@
             ├── 06-refund_input.txt
             ├── 07-refund_input.txt
             └── 08-refund_input.txt
-            ```
-
-
