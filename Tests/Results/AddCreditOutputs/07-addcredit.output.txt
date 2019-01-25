@@ -1,0 +1,2 @@
+06 RecieverAccount SS 001500.00
+00 AdminUser123456 AA 030320.00

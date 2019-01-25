@@ -1,0 +1,9 @@
+login
+UserAdmin123456
+addcredit
+1000.00
+IncorrectlyEnteredUsername
+addcredit
+1000.00
+
+logout

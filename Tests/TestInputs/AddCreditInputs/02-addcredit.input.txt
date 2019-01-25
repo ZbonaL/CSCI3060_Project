@@ -1,0 +1,6 @@
+login
+NonAdminUser123
+addcredit
+abc
+logout
+

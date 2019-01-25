@@ -1,0 +1,5 @@
+login
+NonAdminUser123
+addcredit
+1500
+logout

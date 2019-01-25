@@ -1,0 +1,6 @@
+login
+AdminUser123456
+addcredit
+RecieverAccount
+1000.00
+logout

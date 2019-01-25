@@ -1,0 +1,6 @@
+login
+AdminUser123456
+addcredit
+1000.00
+NonExistantUser
+logout
