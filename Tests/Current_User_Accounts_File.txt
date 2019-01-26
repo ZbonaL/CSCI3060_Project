@@ -5,9 +5,11 @@ RecieverAccount FS 000000.00
 AdminUser123456 AA 000000.00
 NonAdminUser123 FS 000000.00
 BobJonesADMIN   AA 190000.00
+BobJonesNOADMIN FS 000000.00
 SellerJonesAA	AA 000000.00
 SellerJonesSS	SS 000000.00
-BobJones        FS 190000.00
+BuyerJonesBS  BS 190000.00
+BuyerJonesSS  SS 190000.00
 createdAdmin    AA 000000.00
 newsell1        SS 000000.00
 newsell2        SS 000000.00
@@ -19,8 +21,6 @@ newUser2        FS 000000.00
 newUser3        FS 000000.00
 ImAdmin         AA 000000.00
 BobJones0002    AA 000000.00
-User01Exists    AA 000000.00
-NoMoreTickets   BS 000000.00
 login1Admin     AA 000000.00
 login1NewAdmin  AA 000000.00
 loginSeller     SS 000000.00
@@ -28,6 +28,6 @@ loginFullStan   FS 000000.00
 loginBuyer      BS 000000.00
 LoginBuyStan    BS 000000.00
 login1NewUser   FS 000000.00
-loginFullStän   FS 000000.00
-löginÄdmin      AA 000000.00
-loginNewBüyer   BS 000000.00
+loginFullStÃ¤n   FS 000000.00
+lÃ¶ginÃ„dmin      AA 000000.00
+loginNewBÃ¼yer   BS 000000.00
