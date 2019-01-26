@@ -10,4 +10,6 @@
 > * Backend holds all the code for the backend of the project (Java)
 > * Tests holds all the test and results when the software is to be tested
 > * Each of the Folders has a readem for what is happening in each directory
->>  1. [link](Tests/README.md)
+>  1. [Test Directory README](Tests/README.md)
+>  2. [FrontEnd README](FrontEnd/README.md)
+>  3. [BackEnd README](BackEnd/README.md)
