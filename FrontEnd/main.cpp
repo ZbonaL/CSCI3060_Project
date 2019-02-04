@@ -12,6 +12,7 @@ int main(int argc, char const *argv[]){
     take in file through args
     scan the file 
     print out file contents
+    Just build buy functions
     */
    ifstream inFile;
    string data;
