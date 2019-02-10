@@ -10,6 +10,7 @@ class User{
   double creditAmount;
 
   public:
+    // User::User();
     User(string username, string accountType, double creditAmount);
 
     void SetUser(string username, string accountType, double creditAmount);
