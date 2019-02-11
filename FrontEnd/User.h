@@ -8,12 +8,12 @@ class User{
   	double creditAmount;
 
   public:
-    	std::string username;
+    std::string username;
  	std::string accountType;
-    	User(string username, string accountType, double creditAmount);
-	string getUsername();
-    	string getAccountType();
-    	double getCreditAmount();
+    User(string username, string accountType, double creditAmount);
+	string getUserName();
+    string getAccountType();
+    double getCreditAmount();
 	void setCredit(double credit);
 };
 #endif

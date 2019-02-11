@@ -11,7 +11,7 @@ using namespace std;
 
 void dailyTransaction(string filename);
 void readCurrentUser(string filename);
-void readTicketFile(string filename, string eventName);
+void readTicketFile(string filename);
 
 int main(int argc, char const *argv[]){
     

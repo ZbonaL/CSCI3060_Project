@@ -13,4 +13,4 @@ User::User(string username, string accountType, double creditAmount){
 string User::getUserName(){ return username; }
 string User::getAccountType(){ return accountType; }
 double User::getCreditAmount(){ return creditAmount; }
-void User:setCredit(double credit){ creditAmount = credit; }
+void User::setCredit(double credit){ creditAmount = credit; }
