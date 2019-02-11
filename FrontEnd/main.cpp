@@ -18,6 +18,7 @@ This is a program that handles ticket sales:
 
 
 using namespace std;
+Transaction transction;
 
 /**/
 void dailyTransaction(string filename);
@@ -27,12 +28,13 @@ void readCurrentUser(string filename);
 void readTicketFile(string filename);
 
 int main(int argc, char const *argv[]){
-    
+
 
    if(argv[1] != NULL){
         ifstream inFile;
         string data;
         inFile.open(argv[1]);
+        transction.login(data);
 
         while(getline(inFile, data)){
             if(data == "login"){
@@ -55,7 +57,8 @@ void readCurrentUser(string filename){
     bool nameExists = 0;
     input.open(filename);
 
-    Transaction transction;
+
+
 
     
     string new_username;

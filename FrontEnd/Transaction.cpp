@@ -2,6 +2,7 @@
 #include "User.h"
 #include "Transaction.h"
 #include <string>
+#include <fstream>
 
 
 using std::string;
@@ -9,7 +10,9 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+Transaction::Transaction(){
 
+}
 
 //Transaction Methods 
 // Login #TODO
@@ -33,6 +36,14 @@ void Transaction::login(string UserName){
 
 // Logout #TODO
 void logout(){
+    string filename;
+    string output;
+    
+    std::ofstream file;
+    file.open(filename);
+    file << output;
+    file.close();
+    exit(0);
 }
 
 // Create
