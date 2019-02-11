@@ -70,12 +70,12 @@ void readCurrentUser(string filename){
         exit(1);
     }
 
-    while(!input.eof()){
+    while(!input.eof()&&(nameExists == 1)){
 
         string temp = "";
         getline(input, temp);
-
-        transction.login(new_username);
+	
+        transction.login(new_username, temp, nameExists);
 
         
     }

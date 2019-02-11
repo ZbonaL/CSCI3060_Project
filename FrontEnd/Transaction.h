@@ -5,7 +5,7 @@ class Transaction{
 
 	public:
 		Transaction();
-		void login(std::string UserName);
+		void login(std::string UserName, string temp, bool nameExists);
 		void logout();
 		void buy();
 		void sell();
