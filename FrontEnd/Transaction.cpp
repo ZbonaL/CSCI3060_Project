@@ -19,17 +19,14 @@ Transaction::Transaction(){
 void Transaction::login(string UserName, string temp, bool nameExists){
     
     bool nameExists = 0;
-    int counter = 0;
-	int addOn = 14 - UserName.size();
-	for(int i = 0; i < addOn; i++){
-		UserName = UserName + " "
-	}
+
 	for(int i = 0; i < UserName.size(); i++){
         if (UserName[i] == temp[i]){
-			counter++;
-		}
-        if (counter == (UserName.size() - 1)){
 			nameExists = 1;
+		}
+        else {
+			nameExists = 0;
+			break
 		}
         if(nameExists){
         	cout << "Welcome User: " << UserName << endl;
