@@ -1,21 +1,19 @@
 #include <string>
-
-using std::string;
+#ifndef USER_H_
+#define USER_H_
 
 class User{
 
   private:
-  string username;
-  string accountType;
-  double creditAmount;
+  	double creditAmount;
 
   public:
-    // User::User();
-    User(string username, string accountType, double creditAmount);
-
-    void SetUser(string username, string accountType, double creditAmount);
-    
-    string getUserName(){ return username; }
-    string getAccountType(){ return accountType; }
-    double getCreditAmount(){ return creditAmount; }
+    	std::string username;
+ 	std::string accountType;
+    	User(string username, string accountType, double creditAmount);
+	string getUsername();
+    	string getAccountType();
+    	double getCreditAmount();
+	void setCredit(double credit);
 };
+#endif

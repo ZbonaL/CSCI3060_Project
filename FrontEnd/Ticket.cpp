@@ -3,14 +3,12 @@
 
 using std::string;
 
-Ticket::Ticket(int TicketID, string EventTitle, int TicketQuantity, double TicketPrice){
-    setTicket(TicketID, EventTitle, TicketQuantity, TicketPrice);
+Ticket::Ticket(string EventTitle, int TicketQuantity, double TicketPrice){
+    this->EventTitle = EventTitle;
+    this->TicketQuantity = TicketQuantity;
+    this->TicketPrice = TicketPrice;
 }
 
-
-void Ticket::setTicket(int TicketID, string EventTitle, int TicketQuantity, double TicketPrice){
-    TicketID = TicketID;
-    EventTitle = EventTitle;
-    TicketQuantity = TicketQuantity;
-    TicketPrice = TicketPrice;
-}
+string Ticket::getEventTitle(){ return EventTitle; }
+int Ticket::getTicketQuantity(){ return TicketQuantity; }
+double Ticket::getTicketPrice(){ return TicketPrice; }

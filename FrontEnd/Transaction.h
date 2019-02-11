@@ -1,15 +1,17 @@
-#include <string>
-
-using std::string;
+#ifndef TRANSACTION_H_
+#define TRANSACTION_H_
 
 class Transaction{
 
-private:
-string transactionID;
-
-
-public:
-Transaction(string transactionID);
-
-    
+	public:
+		Transaction();
+		void login(std::string Username);
+		void logout();
+		void buy();
+		void sell();
+		void create();
+		void deleteUser();
+		void refund();
+		void addCredit();
 };
+#endif

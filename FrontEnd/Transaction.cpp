@@ -5,23 +5,18 @@
 #include <Ticket.h>
 
 using std::string;
-
-
-
-
-//Grabs the transaction from the methods below 
-void getTransactionID(){
-
-}
+using std::cout;
+using std::cin;
+using std::endl;
 
 //Transaction Methods 
 // Login #TODO
 void login(string userName){
-    std::cout << "Enter a Username: ";
-    std::cin >> userName;
+    cout << "Enter a Username: ";
+    cin >> userName;
 
     while(userName.size() == 0 || userName.size() == 15){
-        std::cout << "Was not Correct. Please Try Again" << std::endl;
+        cout << "Was not Correct. Please Try Again" << endl;
 
     }
 
@@ -32,11 +27,11 @@ void logout(){
 }
 
 // Create
-void createUser(string userName, string accountType, double credit){
+void create(string userName, string accountType, double credit){
 
 }
 
-// Delete
+// Delete Note: Used deleteUser instead of delete due to delete being a C++ keyword
 void deleteUser(string userName){
 
 }
@@ -48,15 +43,15 @@ void sell(){
 
 // Buy #TODO
 void buy(string eventname, string sellername, int ticketQuantity){
-    std::cout << "Enter the Login of the Event: ";
-    std::cin >> eventname;
+    cout << "Enter the Login of the Event: ";
+    cin >> eventname;
     if (eventname.size() == 0 || eventname.size() > 25){
-        std::cout << "Sorry that was an invalid event: ";
+        cout << "Sorry that was an invalid event: ";
         //logout();
     }
     else{
-        std::cout << "Enter the Seller's Username: ";
-        std::cin >> sellername;
+        cout << "Enter the Seller's Username: ";
+        cin >> sellername;
     }
 }
 

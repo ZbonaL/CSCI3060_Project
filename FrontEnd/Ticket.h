@@ -1,23 +1,16 @@
 #include <string>
-
-using std::string;
-
+#ifndef TICKET_H_
+#define TICKET_H_
 
 class Ticket{
-
-    private:
-        int TicketID;
-        string EventTitle;
+    public:
+        std::string EventTitle;
         int TicketQuantity;
         double TicketPrice;
-    
-    public:
-        Ticket(int TicketID, string EventTitle, int TicketQuantity, double TicketPrice);
 
-        void setTicket(int TicketID, string EventTitle, int TicketQuantity, double TicketPrice);
-
-        int getTicketID(){ return TicketID;}
-        string getEventTitle(){ return EventTitle;}
-        int getTicketQuantity(){ return TicketQuantity;}
-        double getTicketPrice(){ return TicketPrice;}
+        Ticket(std::string EventTitle, int TicketQuantity, double TicketPrice);
+        std::string getEventTitle();
+        int getTicketQuantity();
+        double getTicketPrice(); 
 };
+#endif 
