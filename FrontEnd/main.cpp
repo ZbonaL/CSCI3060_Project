@@ -45,8 +45,6 @@ void readCurrentUser(string filename){
     string new_username;
     getline(cin, new_username);
 
-    cout << new_username << endl;
-
    
     if(input.fail()){
         cout << "Reading of current user file has failed." << endl;
