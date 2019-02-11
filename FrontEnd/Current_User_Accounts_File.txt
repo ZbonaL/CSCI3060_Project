@@ -8,8 +8,8 @@ BobJonesADMIN   AA 190000.00
 BobJonesNOADMIN FS 000000.00
 SellerJonesAA	AA 000000.00
 SellerJonesSS	SS 000000.00
-BuyerJonesBS  BS 190000.00
-BuyerJonesSS  SS 190000.00
+BuyerJonesBS    BS 190000.00
+BuyerJonesSS    SS 190000.00
 createdAdmin    AA 000000.00
 newsell1        SS 000000.00
 newsell2        SS 000000.00
