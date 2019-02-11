@@ -19,7 +19,7 @@ Transaction::Transaction(){
 void Transaction::login(string UserName, string temp, bool nameExists){
     
     nameExists = 0;
-	for(int i = 0; i < UserName.size(); i++){
+	for(int i = 0; i < UserName.size() - 1; i++){
         if (UserName[i] == temp[i]){
 			nameExists = 1;
 		}
