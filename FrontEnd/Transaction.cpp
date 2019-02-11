@@ -18,15 +18,14 @@ Transaction::Transaction(){
 // Login #TODO
 void Transaction::login(string UserName, string temp, bool nameExists){
     
-    bool nameExists = 0;
-
+    nameExists = 0;
 	for(int i = 0; i < UserName.size(); i++){
         if (UserName[i] == temp[i]){
 			nameExists = 1;
 		}
         else {
 			nameExists = 0;
-			break
+			break;
 		}
         if(nameExists){
         	cout << "Welcome User: " << UserName << endl;
