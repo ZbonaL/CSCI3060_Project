@@ -10,7 +10,7 @@
 using namespace std;
 
 void dailyTransaction(string filename);
-void readCurrentUser(string filename, string username);
+void readCurrentUser(string filename);
 void readTicketFile(string filename, string eventName);
 
 int main(int argc, char const *argv[]){
@@ -29,33 +29,38 @@ int main(int argc, char const *argv[]){
         inFile.close();
    }else{
         cout << "Welcome to FooBar Ticket Service" << endl;
-        cout << "Please enter your username: " << endl;
-
-        string new_username;
-        cin >> new_username;
-        readCurrentUser("Current_User_Accounts_File.txt", new_username);
+        cout << "Please Enter A User Name: ";
+        readCurrentUser("Current_User_Accounts_File.txt");
     }
 
    return 0;
 }
 
-void readCurrentUser(string filename, string username){
+void readCurrentUser(string filename){
 
     ifstream input;
     bool nameExists = 0;
     input.open(filename);
     
+    string new_username;
+    getline(cin, new_username);
+
+    cout << new_username << endl;
+
+   
     if(input.fail()){
         cout << "Reading of current user file has failed." << endl;
         exit(1);
     }
 
     while(!input.eof()){
+
         string temp = "";
         getline(input, temp);
 
-        for(int i = 0; i < username.size(); i++){
-            if (temp[i] == username[i]){
+        
+        for(int i = 0; i < new_username.size(); i++){
+            if (temp[i] == new_username[i]){
                 nameExists =1;
             }else{
                 nameExists = 0;
@@ -64,7 +69,7 @@ void readCurrentUser(string filename, string username){
         }
         
         if(nameExists){
-			cout << "Welcome User: " << username << endl;
+			cout << "Welcome User: " << new_username << endl;
 			break;
 		}
     }
