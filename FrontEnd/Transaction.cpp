@@ -1,25 +1,35 @@
 #include <Transaction.h>
 #include <iostream>
+#include "User.h"
+#include "Transaction.h"
 #include <string>
-#include <User.h>
-#include <Ticket.h>
+
 
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
 
+
+
 //Transaction Methods 
 // Login #TODO
-void login(string userName){
-    cout << "Enter a Username: ";
-    cin >> userName;
-
-    while(userName.size() == 0 || userName.size() == 15){
-        cout << "Was not Correct. Please Try Again" << endl;
-
+void Transaction::login(string UserName){
+    
+    bool nameExists = 0;
+ 
+    for(int i = 0; i < UserName.size(); i++){
+            if (UserName[i] == UserName[i]){
+                nameExists =1;
+            }else{
+                nameExists = 0;
+                break;
+            }
+        }
+        
+        if(nameExists){
+            cout << "Welcome User: " << UserName << endl;
     }
-
 }
 
 // Logout #TODO

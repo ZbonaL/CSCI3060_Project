@@ -1,3 +1,13 @@
+/*
+This is a program that handles ticket sales:
+
+@authors: Leonard Zbona, Sinthooran Ravinathan, Danooshan Sureshkumar
+@since: 2019-01-14
+@version 1.0
+*/
+
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -9,8 +19,11 @@
 
 using namespace std;
 
+/**/
 void dailyTransaction(string filename);
+/**/
 void readCurrentUser(string filename);
+/**/
 void readTicketFile(string filename);
 
 int main(int argc, char const *argv[]){
@@ -41,6 +54,9 @@ void readCurrentUser(string filename){
     ifstream input;
     bool nameExists = 0;
     input.open(filename);
+
+    Transaction transction;
+
     
     string new_username;
     getline(cin, new_username);
@@ -56,20 +72,9 @@ void readCurrentUser(string filename){
         string temp = "";
         getline(input, temp);
 
+        transction.login(new_username);
+
         
-        for(int i = 0; i < new_username.size(); i++){
-            if (temp[i] == new_username[i]){
-                nameExists =1;
-            }else{
-                nameExists = 0;
-                break;
-            }
-        }
-        
-        if(nameExists){
-			cout << "Welcome User: " << new_username << endl;
-			break;
-		}
     }
     
     if(input.eof()&&(nameExists == 0)){
