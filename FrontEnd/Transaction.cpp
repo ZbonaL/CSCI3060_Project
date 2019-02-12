@@ -22,9 +22,16 @@ Transaction::Transaction(){
 
 }
 
+std::string command;
+
+
 //Transaction Methods 
 //Method: login
 void Transaction::login(string UserName, string temp, bool nameExists){
+std::string eventTitle;
+std::string sellername;
+int ticketQuantity;
+       
     
     nameExists = 0;
 	for(int i = 0; i < UserName.size(); i++){
@@ -41,7 +48,14 @@ void Transaction::login(string UserName, string temp, bool nameExists){
   	
        if(nameExists){
         	cout << "Welcome User: " << UserName << endl;
-			//break;
+			 std::cout << "Enter a Command: ";
+             std::cin >> command;
+            if (command == "buy"){
+            buy(eventTitle, sellername, ticketQuantity);
+            }
+            if (command == "logout"){
+            logout();
+            }
        }
 }
 
@@ -75,7 +89,7 @@ void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice
 
 //Method: buy
 void Transaction::buy(string eventname, string sellername, int ticketQuantity){
-    cout << "Enter the Login of the Event: ";
+    cout << "Enter the Title of the Event: ";
     cin >> eventname;
     if (eventname.size() == 0 || eventname.size() > 25){
         cout << "Sorry that was an invalid event: ";

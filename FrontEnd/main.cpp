@@ -18,6 +18,7 @@ This is a program that handles ticket sales:
 using namespace std;
 Transaction transaction;
 
+
 /*
     This funtion is called when the user logs out.
     It prints out the last transaction that was made at the time of logout.
@@ -63,6 +64,7 @@ int main(int argc, char const *argv[]){
         cout << "Welcome to FooBar Ticket Service" << endl;
         cout << "Please Enter A User Name: ";
         readCurrentUser("Current_User_Accounts_File.txt");
+
     }
 
    return 0;
@@ -75,6 +77,10 @@ void readCurrentUser(string filename){
     input.open(filename);
 
     string new_username;
+    string eventTitle;
+    string sellername;
+    int ticketQuantity;
+
     getline(cin, new_username);
 
     if(input.fail()){
@@ -88,8 +94,9 @@ void readCurrentUser(string filename){
         getline(input, temp);
 	
         transaction.login(new_username, temp, nameExists);
-
         
+
+
     }
     
     if(input.eof()&&(nameExists == 0)){
