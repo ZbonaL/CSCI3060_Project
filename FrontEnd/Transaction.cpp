@@ -66,7 +66,7 @@ void Transaction::deleteUser(string userName){
 }
 
 //Method: sell
-void Transaction::sell(){
+void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice){
 
 }
 
@@ -84,11 +84,11 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
 }
 
 //Method: refund
-void Transaction::refund(){
+void Transaction::refund(string userNameBuy, string userNameSell, double creditAmount){
 
 }
 
 //Method: addCredit
-void Transaction::addcredit(){
+void Transaction::addCredit(double creditAmount, string userName){
 
 }

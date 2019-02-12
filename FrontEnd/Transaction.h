@@ -31,26 +31,26 @@ class Transaction{
 	
 		//Method Name: buy
 		//Purpose: Purchases a number of available tickets and transfers credit from the buying user to the selling user.
-		void buy();
+		void buy(string eventname, string sellername, int ticketQuantity);
 		
 		//Method Name: sell
 		//Purpose: Sells a number of tickets and writes them to the tickets file to be available for purchase.
-		void sell();
+		void sell(string eventTitle, int ticketQuantity, double ticketPrice);
 
 		//Method Name: create
 		//Purpose: Creates a User class, and issues them a privelege. Then saves this to the current user input file. 
-		void create();
+		void create(string userName, string accountType, double credit);
 	
 		//Method Name: deleteUser
 		//Purpose: Cancels any outstanding tickets for purchase or sale of a user and removes that user account.
-		void deleteUser();
+		void deleteUser(string userName);
 
 		//Method Name: refund
 		//Purpose: Issues a credit from the buyers account to the sellers account.
-		void refund();
+		void refund(string userNameBuy, string userNameSell, double creditAmount);
 
 		//Method Name: addCredit
 		//Purpose: Adds credit to a users own account or as an admin adds credit to a different user account
-		void addCredit();
+		void addCredit(double creditAmount, string userName);
 };
 #endif // Ends the ifndef condition
