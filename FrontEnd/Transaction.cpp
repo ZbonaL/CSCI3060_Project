@@ -27,7 +27,7 @@ Transaction::Transaction(){
 void Transaction::login(string UserName, string temp, bool nameExists){
     
     nameExists = 0;
-	for(int i = 0; i < UserName.size() - 1; i++){
+	for(int i = 0; i < UserName.size(); i++){
         if (UserName[i] == temp[i]){
 			nameExists = 1;
 		}
@@ -35,11 +35,14 @@ void Transaction::login(string UserName, string temp, bool nameExists){
 			nameExists = 0;
 			break;
 		}
-        if(nameExists){
-        	cout << "Welcome User: " << UserName << endl;
-			break;
+       
+            
 		}
-  	}
+  	
+       if(nameExists){
+        	cout << "Welcome User: " << UserName << endl;
+			//break;
+       }
 }
 
 //Method: logout
