@@ -5,6 +5,7 @@ This is a program that holds the definitions of the methods and classes defined 
 @since: 2019-01-14
 @version 1.0
 */
+
 #include <iostream>
 #include "User.h" //Includes the declaration of the User class and its methods.
 #include "Transaction.h" //Includes the declaration of the Transaction class and its methods.
@@ -28,12 +29,11 @@ std::string command;
 //Transaction Methods 
 //Method: login
 void Transaction::login(string UserName, string temp, bool nameExists){
-std::string eventTitle;
-std::string sellername;
-int ticketQuantity;
+    std::string eventTitle;
+    std::string sellername;
+    int ticketQuantity;
        
-    
-    nameExists = 0;
+    int     nameExists = 0;
 	for(int i = 0; i < UserName.size(); i++){
         if (UserName[i] == temp[i]){
 			nameExists = 1;
@@ -44,19 +44,19 @@ int ticketQuantity;
 		}
        
             
-		}
-  	
-       if(nameExists){
-        	cout << "Welcome User: " << UserName << endl;
-			 std::cout << "Enter a Command: ";
-             std::cin >> command;
-            if (command == "buy"){
+	}
+    
+    if(nameExists){
+        cout << "Welcome User: " << UserName << endl;
+		std::cout << "Enter a Command: ";
+        std::cin >> command;
+        if (command == "buy"){
             buy(eventTitle, sellername, ticketQuantity);
-            }
-            if (command == "logout"){
+        }
+        if (command == "logout"){
             logout();
-            }
-       }
+        }
+    }
 }
 
 //Method: logout

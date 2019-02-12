@@ -72,9 +72,9 @@ int main(int argc, char const *argv[]){
 
 void readCurrentUser(string filename){
 
-    ifstream input;
+    ifstream file_input;
     bool nameExists = 0;
-    input.open(filename);
+    file_input.open(filename);
 
     string new_username;
     string eventTitle;
@@ -83,25 +83,22 @@ void readCurrentUser(string filename){
 
     getline(cin, new_username);
 
-    if(input.fail()){
+    if(file_input.fail()){
         cout << "Reading of current user file has failed." << endl;
         exit(1);
     }
 
-    while(!input.eof()){
+    while(!file_input.eof()){
 
         string temp = "";
-        getline(input, temp);
+        getline(file_input, temp);
 	
         transaction.login(new_username, temp, nameExists);
-        
-
-
     }
     
-    if(input.eof()&&(nameExists == 0)){
+    if(file_input.eof()&&(nameExists == 0)){
         cout << "User doesnt exist." << endl;
     }
 
-    input.close();
+    file_input.close();
 }
