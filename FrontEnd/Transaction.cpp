@@ -1,21 +1,29 @@
+/*
+This is a program that holds the definitions of the methods and classes defined in Transaction.h
+
+@authors: Leonard Zbona, Sinthooran Ravinathan, Danooshan Sureshkumar
+@since: 2019-01-14
+@version 1.0
+*/
 #include <iostream>
-#include "User.h"
-#include "Transaction.h"
+#include "User.h" //Includes the declaration of the User class and its methods.
+#include "Transaction.h" //Includes the declaration of the Transaction class and its methods.
 #include <string>
 #include <fstream>
 
-
+//Importing from the standard library in order to avoid using redundant methods and slowing down performance.
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
 
+//Method: Transaction
 Transaction::Transaction(){
 
 }
 
 //Transaction Methods 
-// Login #TODO
+//Method: login
 void Transaction::login(string UserName, string temp, bool nameExists){
     
     nameExists = 0;
@@ -34,8 +42,8 @@ void Transaction::login(string UserName, string temp, bool nameExists){
   	}
 }
 
-// Logout #TODO
-void logout(){
+//Method: logout
+void Transaction::logout(){
     string filename;
     string output;
     
@@ -46,28 +54,28 @@ void logout(){
     exit(0);
 }
 
-// Create
-void create(string userName, string accountType, double credit){
+//Method: create
+void Transaction::create(string userName, string accountType, double credit){
 
 }
 
+//Method: deleteUser
 // Delete Note: Used deleteUser instead of delete due to delete being a C++ keyword
-void deleteUser(string userName){
+void Transaction::deleteUser(string userName){
 
 }
 
-// Sell
-void sell(){
+//Method: sell
+void Transaction::sell(){
 
 }
 
-// Buy #TODO
-void buy(string eventname, string sellername, int ticketQuantity){
+//Method: buy
+void Transaction::buy(string eventname, string sellername, int ticketQuantity){
     cout << "Enter the Login of the Event: ";
     cin >> eventname;
     if (eventname.size() == 0 || eventname.size() > 25){
         cout << "Sorry that was an invalid event: ";
-        //logout();
     }
     else{
         cout << "Enter the Seller's Username: ";
@@ -75,12 +83,12 @@ void buy(string eventname, string sellername, int ticketQuantity){
     }
 }
 
-// Refund
-void refund(){
+//Method: refund
+void Transaction::refund(){
 
 }
 
-// AddCredit
-void addcredit(){
+//Method: addCredit
+void Transaction::addcredit(){
 
 }
