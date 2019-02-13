@@ -25,24 +25,44 @@ class User{
     std::string UserName;
  	std::string accountType;
 	
-	//Method Name: User
-	//Purpose: Constructs the User object.
+/* 
+	This function is called when a User object is created
+	@params: string UserName: the name of the User
+			 string accountType: the privelege level of the user..
+			 double creditAmount: the credit available on users account.
+	@returns: Constructs the User object.
+
+*/
     User(std::string UserName, std::string accountType, double creditAmount);
 	
-	//Method Name: getUserName
-	//Purpose: Returns the UserName of the User object.
+/* 
+	This function is for getting the username from the User.
+	@params: None
+	@returns: The username on the User object
+*/
 	std::string getUserName();
 
-	//Method Name: getAccountType
-	//Purpose: Returns the accountType of the User object.
+/* 
+	This function is for getting the account type from the user
+	@params: None
+	@returns: The account type on the User object
+*/
     std::string getAccountType();
 	
-	//Method Name: getCreditAmount
-	//Purpose: Returns the creditAmount of the User object.
+/* 
+	This function is for getting the amount of credit on the users account.
+	@params: None
+	@returns: The credit amount on the User object
+
+*/
     double getCreditAmount();
 
-	//Method Name: setCredit
-	//Purpose: Used for altering the value of credit.
+/* 
+	This function is for changing the amount of credit on the users account.
+	@params: double credit: the amount of credit to change to.
+	@returns: Sets the new amount of credit.
+
+*/
 	void setCredit(double credit);
 };
 #endif

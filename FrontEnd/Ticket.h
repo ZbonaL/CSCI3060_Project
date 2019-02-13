@@ -17,20 +17,35 @@ class Ticket{
         int TicketQuantity;
         double TicketPrice;
 
-		//Method name: Ticket
-		//Purpose: Constructs a Ticket object with an EventTitle, TicketQuantity, and TicketPrice
+/* 
+	This function is called when a Ticket object is created
+	@params: string EventTitle: the name of the Event on the ticket
+			 int TicketQuantity: the number of available tickets for the event.
+			 double TicketPrice: the price of the ticket.
+	@returns: Constructs the Ticket object.
+
+*/
         Ticket(std::string EventTitle, int TicketQuantity, double TicketPrice);
 
-		//Method name: getEventTitle
-		//Purpose: Returns the EventTitle of the Ticket object.
+/*		
+	This function is for getting the EventTitle from a Ticket object
+	@params: None
+	@returns: The event title on the Ticket object.
+*/
         std::string getEventTitle();
 
-		//Method name: getTicketQuantity
-		//Purpose: Returns the TicketQuantity of the Ticket object.
+/*	
+	This function returns the number of tickets available for this Ticket object
+	@params: None
+	@returns: The ticket quantity on the Ticket object
+*/
         int getTicketQuantity();
 
-		//Method name: getTicketPrice
-		//Purpose: Returns the TicketPrice of the Ticket object.
+/*		
+	This function returns the price of 1 ticket available for this Ticket object
+	@params: None
+	@returns: The ticket price on the Ticket object
+*/
         double getTicketPrice(); 
 };
 #endif // Ends the ifndef condition
