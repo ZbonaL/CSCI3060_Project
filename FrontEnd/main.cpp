@@ -9,7 +9,7 @@ This is a program that handles ticket sales:
 #include <iostream>
 #include <fstream>
 #include <string>
-
+#include <stdlib.h>
 #include "User.h"
 #include "Transaction.h"
 #include "Ticket.h"
@@ -74,7 +74,7 @@ void readCurrentUser(string filename){
 
     ifstream file_input;
     bool nameExists = 0;
-    file_input.open(filename);
+    file_input.open(filename.c_str());
 
     string new_username;
     string eventTitle;

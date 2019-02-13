@@ -11,6 +11,7 @@ This is a program that holds the definitions of the methods and classes defined 
 #include "Transaction.h" //Includes the declaration of the Transaction class and its methods.
 #include <string>
 #include <fstream>
+#include <stdlib.h>
 
 //Importing from the standard library in order to avoid using redundant methods and slowing down performance.
 using std::string;
@@ -65,7 +66,7 @@ void Transaction::logout(){
     string output;
     
     std::ofstream file;
-    file.open(filename);
+    file.open(filename.c_str());
     file << output;
     file.close();
     exit(0);
