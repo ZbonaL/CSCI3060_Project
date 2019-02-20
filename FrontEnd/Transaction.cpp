@@ -25,9 +25,20 @@ Transaction::Transaction(){
 }
 
 string cmd;
+
+string newUser;
+string accountType;
+double userCredit;
+
+string currUser;
+string existUser;
+
 string eventN;
 string sellerN;
 int ticketQ;
+double ticketPrice;
+double transactCredit;
+
 
 //Transaction Methods 
 //Method: login
@@ -41,14 +52,22 @@ void Transaction::login(string UserName, string temp, bool nameExists){
         else {
 			nameExists = 0;
 			break;
+
+    if(UserName == "exit"){
+         exit(0);
+     }
 		}
         
   	}
+
+ 
+
       if(nameExists){
         	cout << "Welcome User: " << UserName << endl;
-			cout << "Enter a Cmd (Only 'buy' and 'logout' work): ";
+			cout << "Enter a Cmd (Only 'buy', 'logout', and 'sell' work): ";
             cin >> cmd;
 		}
+
         if(cmd == "buy"){
             buy(eventN, sellerN, ticketQ);
         }
@@ -56,12 +75,35 @@ void Transaction::login(string UserName, string temp, bool nameExists){
         else if(cmd == "logout"){
            cout << "User " << UserName << " Logging Out " << endl;  
            logout();
+        }  
+
+        else if(cmd == "sell"){
+           sell(eventN, ticketQ, ticketPrice);
+        }  
+
+        else if(cmd == "delete"){
+           deleteUser(existUser); 
+        }  
+
+        else if(cmd == "create"){  
+           create(newUser, accountType, userCredit);
+        }  
+
+        else if(cmd == "refund"){
+           refund(currUser, sellerN, transactCredit);
       
         }  
+
+        else if(cmd == "addcredit"){ 
+           addCredit(transactCredit, existUser);
+      
+        }  
+
 	}
 
 //Method: logout 
 void Transaction::logout(){
+
     string filename;
     string output;
     
@@ -85,8 +127,36 @@ void Transaction::deleteUser(string userName){
 
 //Method: sell
 void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice){
+    cout << "Enter the Event Title: ";
+    cin >> eventTitle;
 
+    while (eventTitle.size() <= 25 && eventTitle.size() > 0){
+        cout << "Enter the amount of tickets to sell: ";
+        cin >> ticketQuantity;  
+
+        if(ticketQuantity == 0 || ticketQuantity > 100){
+            cout << "Logging out for either no Quanitity or exceeding Maximum" << endl;
+            logout();
+        }
+        else{
+            cout << "Enter the price for each ticket: ";
+            cin >> ticketPrice;
+        }
+        if (ticketPrice > 999.99){
+            cout << "Logging out for Exceeding Maximum Price" << endl;
+            logout();
+        }
+        else{
+            cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
+            logout();
+        }   
+    }
+    cout << "Length of Event exceeded maximum length" << endl;
+    logout();
 }
+
+
+
 
 //Method: buy
 void Transaction::buy(string eventname, string sellername, int ticketQuantity){
@@ -94,17 +164,11 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
   //Event Stuff (Skeleton Code)
     cout << "Enter the Title of the Event: ";
     cin >> eventname;
-    if(eventname.empty() || eventname.size() > 25){
-        cout << "Sorry that was an Invalid event: Logging Out " << endl;
-        logout();
-    }
-    else{
+    while (eventname.size() > 0 && eventname.size() < 25){
         cout << "Enter the Username of the Seller: ";
         cin >> sellername;
-    }
-
 //Seller Stuff
-    if(sellername.empty() || sellername.size() > 15){
+    if(sellername.size() == 0 || sellername.size() > 15){
          cout << "Invalid Seller. Logging Out " << endl;
          logout();
         }
@@ -133,6 +197,10 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
             logout();
         }
 }
+        cout << "Sorry that was an Invalid event: Logging Out " << endl;
+        logout();
+}
+
 
 //Method: refund
 void Transaction::refund(string userNameBuy, string userNameSell, double creditAmount){
