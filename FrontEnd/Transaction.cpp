@@ -15,6 +15,8 @@ This is a program that holds the definitions of the methods and classes defined 
 
 //Importing from the standard library in order to avoid using redundant methods and slowing down performance.
 using std::string;
+using std::to_string;
+using std::getline;
 using std::cout;
 using std::cin;
 using std::endl;
@@ -25,6 +27,7 @@ Transaction::Transaction(){
 }
 
 string cmd;
+string result;
 
 string newUser;
 string accountType;
@@ -38,6 +41,15 @@ string sellerN;
 int ticketQ;
 double ticketPrice;
 double transactCredit;
+
+
+void fileOutput(string result){
+    std::ofstream file("TransactionTest.txt", std::ios::app);
+    if(file.is_open() ==  true){
+        file << result;
+        file.close();
+    }
+}
 
 
 //Transaction Methods 
@@ -59,8 +71,6 @@ void Transaction::login(string UserName, string temp, bool nameExists){
 		}
         
   	}
-
- 
 
       if(nameExists){
         	cout << "Welcome User: " << UserName << endl;
@@ -127,6 +137,8 @@ void Transaction::deleteUser(string userName){
 
 //Method: sell
 void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice){
+    string result;
+
     cout << "Enter the Event Title: ";
     cin >> eventTitle;
 
@@ -148,6 +160,8 @@ void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice
         }
         else{
             cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
+            result = eventTitle + to_string(ticketQuantity) + to_string(ticketPrice);
+            fileOutput(result);
             logout();
         }   
     }
@@ -161,12 +175,16 @@ void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice
 //Method: buy
 void Transaction::buy(string eventname, string sellername, int ticketQuantity){
     string confirm;
+    string result;
   //Event Stuff (Skeleton Code)
     cout << "Enter the Title of the Event: ";
     cin >> eventname;
+
+
     while (eventname.size() > 0 && eventname.size() < 25){
         cout << "Enter the Username of the Seller: ";
         cin >> sellername;
+        
 //Seller Stuff
     if(sellername.size() == 0 || sellername.size() > 15){
          cout << "Invalid Seller. Logging Out " << endl;
@@ -189,6 +207,8 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
 
         if(confirm == "y"){
             cout << "Transaction Completed. Logging Out " << endl;
+            result = eventname + sellername + to_string(ticketQuantity);
+            fileOutput(result);
             logout();
         }
 
