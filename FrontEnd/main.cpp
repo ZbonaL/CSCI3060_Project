@@ -26,7 +26,7 @@ Transaction transaction;
     @param: string filename: name of the file to be written tp
     @return: a daily transaction file that
 */
-void dailyTransaction(string filename);
+void dailyTransaction(string transactionID, string result);
 
 /*
     This functions is for wroking with the user file. It takes in user input and searches 
@@ -43,7 +43,7 @@ void readCurrentUser(string filename);
     @param string filename takes in the file that stores all the events
     @returns a vaild purchase if the event exists and if the user bought proper amount of tickets
 */
-void readTicketFile(string filename);
+void readTicketFile(string input);
 
 int main(int argc, char const *argv[]){
 
@@ -101,4 +101,34 @@ void readCurrentUser(string filename){
     }
 
     file_input.close();
+}
+
+void dailyTransaction(string transactionID, string result){
+    string filename = "TransactionTest.txt"; 
+    ofstream out;
+    out.open(filename, ios::app);
+
+    if(out.is_open()){
+        out << transactionID + result << endl;
+    }
+    out.close();
+}
+
+void readTicketFile(string input){
+
+    string filename = "Available_Tickets_File.txt";
+    string line ;
+    ifstream in;
+    int line_count = 0 ;
+
+   in.open(filename, std::ios::in);
+   if (in){
+      while ( getline(in, line)) {    
+	 line_count++ ;
+     if (line.find(input) != string::npos){
+         cout << line << endl;
+       }
+      }
+   }
+   in.close( ) ;
 }
