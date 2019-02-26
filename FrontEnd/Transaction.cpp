@@ -26,6 +26,7 @@ Transaction::Transaction(){
 
 }
 
+
 string cmd;
 string result;
 
@@ -54,73 +55,29 @@ void fileOutput(string result){
 
 //Transaction Methods 
 //Method: login
-void Transaction::login(string UserName, string temp, bool nameExists){
+void Transaction::login(string UserName, string temp, bool &nameExists){
 
     nameExists = 0;
-	for(int i = 0; i < UserName.size() - 1; i++){
-        if (UserName[i] == temp[i]){
-			nameExists = 1;
-		}
-        else {
+
+        if (UserName.size() < 15){
+			UserName += (string(15 - UserName.size(), ' '));
+
+            if (UserName == temp.substr(0,15)){
+                nameExists = 1;
+            }
+
+            else {
 			nameExists = 0;
-			break;
-
-    if(UserName == "exit"){
-         exit(0);
-     }
 		}
-        
-  	}
-
-      if(nameExists){
-        	cout << "Welcome User: " << UserName << endl;
-			cout << "Enter a Cmd (Only 'buy', 'logout', and 'sell' work): ";
-            cin >> cmd;
 		}
-
-        if(cmd == "buy"){
-            buy(eventN, sellerN, ticketQ);
-        }
-
-        else if(cmd == "logout"){
-           cout << "User " << UserName << " Logging Out " << endl;  
-           logout();
-        }  
-
-        else if(cmd == "sell"){
-           sell(eventN, ticketQ, ticketPrice);
-        }  
-
-        else if(cmd == "delete"){
-           deleteUser(existUser); 
-        }  
-
-        else if(cmd == "create"){  
-           create(newUser, accountType, userCredit);
-        }  
-
-        else if(cmd == "refund"){
-           refund(currUser, sellerN, transactCredit);
-      
-        }  
-
-        else if(cmd == "addcredit"){ 
-           addCredit(transactCredit, existUser);
-      
-        }  
-
+       
+      if(nameExists == 1){
+        	cout << "Welcome User: " <<  UserName << endl;
+      }
 	}
 
 //Method: logout 
 void Transaction::logout(){
-
-    string filename;
-    string output;
-    
-    std::ofstream file;
-    file.open(filename.c_str());
-    file << output;
-    file.close();
     exit(0);
 }
 
@@ -176,7 +133,7 @@ void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice
 void Transaction::buy(string eventname, string sellername, int ticketQuantity){
     string confirm;
     string result;
-  //Event Stuff (Skeleton Code)
+    
     cout << "Enter the Title of the Event: ";
     cin >> eventname;
 
@@ -220,7 +177,6 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
         cout << "Sorry that was an Invalid event: Logging Out " << endl;
         logout();
 }
-
 
 //Method: refund
 void Transaction::refund(string userNameBuy, string userNameSell, double creditAmount){

@@ -48,6 +48,7 @@ void readTicketFile(string input);
 int main(int argc, char const *argv[]){
 
 
+
    if(argv[1] != NULL){
         ifstream inFile;
         string data;
@@ -76,10 +77,13 @@ void readCurrentUser(string filename){
     bool nameExists = 0;
     file_input.open(filename.c_str());
 
+    char cmd;
+    
     string new_username;
     string eventTitle;
     string sellername;
     int ticketQuantity;
+    double ticketPrice;
 
     getline(cin, new_username);
 
@@ -89,17 +93,48 @@ void readCurrentUser(string filename){
     }
 
     while(!file_input.eof()){
-
         string temp = "";
         getline(file_input, temp);
 	
         transaction.login(new_username, temp, nameExists);
-    }
-    
+
+       if(nameExists == 1){
+        cout << "Enter The Command: ";
+        cin >> cmd;
+
+        switch(cmd){
+            case 'l': 
+            transaction.logout();
+            break;
+
+            case 'c':
+            break;
+
+            case 'd':
+            break;
+
+            case 'b':
+            transaction.buy(eventTitle, sellername, ticketQuantity);
+            break;
+
+            case 's':
+            transaction.sell(eventTitle, ticketQuantity, ticketPrice);
+            break;
+
+            case 'r':
+            break;
+
+            case 'a':
+            break;
+
+            // default:
+        }
+        }
+
     if(file_input.eof()&&(nameExists == 0)){
         cout << "User doesnt exist." << endl;
+        }
     }
-
     file_input.close();
 }
 

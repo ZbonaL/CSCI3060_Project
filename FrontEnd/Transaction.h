@@ -33,7 +33,7 @@ class Transaction{
 	@returns: Sends a welcome message to the user if username is valid
 
 */
-		void login(std::string UserName, std::string temp, bool nameExists);
+		void login(std::string UserName, std::string temp, bool &nameExists);
 
 /* 
 	This function logs the user out
