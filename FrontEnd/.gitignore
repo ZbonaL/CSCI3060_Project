@@ -1,3 +1,5 @@
 *.o
-*main
-*output
+main
+output
+*.out
+*.trn
