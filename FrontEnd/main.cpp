@@ -17,6 +17,7 @@ This is a program that handles ticket sales:
 
 using namespace std;
 Transaction transaction;
+User currentUser;
 
 
 /*
@@ -96,7 +97,7 @@ void readCurrentUser(string filename){
         string temp = "";
         getline(file_input, temp);
 	
-        transaction.login(new_username, temp, nameExists);
+        transaction.login(new_username, temp, nameExists, currentUser);
 
        if(nameExists == 1){
         cout << "Enter The Command: ";
@@ -122,6 +123,7 @@ void readCurrentUser(string filename){
             break;
 
             case 'r':
+			transaction.refund(currentUser);
             break;
 
             case 'a':
@@ -141,7 +143,7 @@ void readCurrentUser(string filename){
 void dailyTransaction(string transactionID, string result){
     string filename = "TransactionTest.txt"; 
     ofstream out;
-    out.open(filename, ios::app);
+    out.open(filename.c_str(), ios::app);
 
     if(out.is_open()){
         out << transactionID + result << endl;
@@ -156,7 +158,7 @@ void readTicketFile(string input){
     ifstream in;
     int line_count = 0 ;
 
-   in.open(filename, std::ios::in);
+   in.open(filename.c_str(), std::ios::in);
    if (in){
       while ( getline(in, line)) {    
 	 line_count++ ;

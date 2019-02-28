@@ -18,12 +18,10 @@ Description: A User class for creating User objects for our ticket selling progr
 */
 class User{
 
-  private:
-  	double creditAmount;
-
   public:
     std::string UserName;
  	std::string accountType;
+ 	double creditAmount;
 	
 /* 
 	This function is called when a User object is created
@@ -33,6 +31,7 @@ class User{
 	@returns: Constructs the User object.
 
 */
+	User();
     User(std::string UserName, std::string accountType, double creditAmount);
 	
 /* 

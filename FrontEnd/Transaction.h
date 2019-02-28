@@ -8,7 +8,7 @@ This is a header file which defines the Transaction class, and declares all clas
 
 #ifndef TRANSACTION_H_ //If a Transaction.h header file is not already included:
 #define TRANSACTION_H_ //Include the Transaction.h class
-
+#include "User.h"
 /*
 Class name: Transaction
 Description: A Transaction class for creating Transaction objects for our ticket selling program.
@@ -33,7 +33,7 @@ class Transaction{
 	@returns: Sends a welcome message to the user if username is valid
 
 */
-		void login(std::string UserName, std::string temp, bool &nameExists);
+		void login(std::string UserName, std::string temp, bool &nameExists, User &currentUser);
 
 /* 
 	This function logs the user out
@@ -85,7 +85,7 @@ class Transaction{
 			 double creditAmount: the credit being refunded.
 	@returns: An amount of the seller accounts credit is sent to the buyer accounts credit
 */
-		void refund(std::string userNameBuy, std::string userNameSell, double creditAmount);
+		void refund(User user);
 
 /* 
 	This function is called when a User object is created
@@ -93,6 +93,6 @@ class Transaction{
 			 string userName: the name of the User being given credit (USED FOR ADMIN ONLY)
 	@returns: Constructs the User object.
 */
-		void addCredit(double creditAmount, std::string userName);
+		void addCredit();
 };
 #endif // Ends the ifndef condition

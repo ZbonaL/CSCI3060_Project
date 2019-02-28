@@ -14,13 +14,13 @@ This is a program that holds the definitions of the methods and classes defined 
 #include <stdlib.h>
 
 //Importing from the standard library in order to avoid using redundant methods and slowing down performance.
-using std::string;
 using std::to_string;
+using std::string;
 using std::getline;
 using std::cout;
 using std::cin;
 using std::endl;
-
+using std::stod;
 //Method: Transaction
 Transaction::Transaction(){
 
@@ -37,12 +37,12 @@ double userCredit;
 string currUser;
 string existUser;
 
+
 string eventN;
 string sellerN;
 int ticketQ;
 double ticketPrice;
 double transactCredit;
-
 
 void fileOutput(string result){
     std::ofstream file("TransactionTest.txt", std::ios::app);
@@ -55,7 +55,7 @@ void fileOutput(string result){
 
 //Transaction Methods 
 //Method: login
-void Transaction::login(string UserName, string temp, bool &nameExists){
+void Transaction::login(string UserName, string temp, bool &nameExists, User &currentUser){
 
     nameExists = 0;
 
@@ -73,6 +73,10 @@ void Transaction::login(string UserName, string temp, bool &nameExists){
        
       if(nameExists == 1){
         	cout << "Welcome User: " <<  UserName << endl;
+			currentUser.UserName = temp.substr(0,15);
+			currentUser.accountType = temp.substr(16,17);
+			currentUser.creditAmount = stod(temp.substr(19,27));
+			//currentUser = user;
       }
 	}
 
@@ -179,51 +183,60 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
 }
 
 //Method: refund
-void Transaction::refund(string UserAccount /*should be using User object*/){
+void Transaction::refund(User UserAccount /*should be using User object*/){
 	string transactionresult;
 	string buyerName; //Will become User objects in future.
 	string sellerName; //Will become User objects in future.
 	double creditTransfer; 
 	//TODO: CHECK USERS PRIVELEGE (can be done later) 
-	//Prompt user for buyer username
-	cout << "Please enter the buyers username: ";
-	cin >> buyerName;
-	//TODO: Check valid buyer username format
-	if (buyerName.size() <= 15 && buyerName.size() >= 0){
-		//Continue Transaction
+	if (UserAccount.getAccountType() == "AA") {
+		//Continue refund.
+		//Prompt user for buyer username
+		cout << "Please enter the buyers username: ";
+		cin >> buyerName;
+		//TODO: Check valid buyer username format
+		if (buyerName.size() <= 15 && buyerName.size() >= 0){
+			//Continue Transaction
+			//TODO: Check if buyer username exists
+			//Prompt user for seller username
+			cout << endl;
+			cout << "Please enter the sellers username: ";
+			cin >> sellerName;
+			//TODO: Check valid seller username format
+			if (sellerName.size() <= 15 && sellerName.size() >= 0){
+				//Continue Transaction
+				//TODO: Check if seller username exists
+				//Prompt user for amount of credit
+				cout << endl;
+				cout << "Please enter the credit to refund: ";
+				cin >> creditTransfer;
+				//TODO: Check valid credit entry
+				if (creditTransfer >= 0.00 && creditTransfer <= 999999.99 && creditTransfer == ((double) creditTransfer)){
+				//Continue Transaction
+				//TODO: Check if entered credit amount can be removed from the sellers account.
+				//TODO: Check if entered credit amount causes buyers credit to exceed maximum.
+				//TODO: Update buyer and seller accounts
+				//TODO: Output to the daily transaction file.
+			} else {
+				//End Transaction
+			}
+			
+			
+			} else {
+				// End transaction
+			}
+		} else {
+			//End Transaction
+		}
 	} else {
 		//End Transaction
+		cout << "Only users with admin priveleges can make refunds." << endl;
 	}
-	//TODO: Check if buyer username exists
-	//Prompt user for seller username
-	cout << endl;
-	cout << "Please enter the sellers username: ";
-	cin >> sellerName;
-	//TODO: Check valid seller username format
-	if (sellerName.size() <= 15 && sellerName.size() >= 0){
-		//Continue Transaction
-	} else {
-		//End Transaction
-	}
-	//TODO: Check if seller username exists
-	//Prompt user for amount of credit
-	cout << endl;
-	cout << "Please enter the credit to refund: ";
-	cin >> creditTransfer;
-	//TODO: Check valid credit entry
-	if (creditTransfer >= 0.00 && creditTransfer <= 999999.99 && creditTransfer == ((double) creditTransfer)){
-		//Continue Transaction
-	} else {
-		// End transaction
-	}
-	//TODO: Check if entered credit amount can be removed from the sellers account.
-	//TODO: Check if entered credit amount causes buyers credit to exceed maximum.
-	//TODO: Update buyer and seller accounts
-	//TODO: Output to the daily transaction file.
+	
 }
 
 //Method: addCredit
-void Transaction::addCredit(string UserAccount){
+void Transaction::addCredit(){
 	string inputAccount;
 	double creditTransfer;
 	//TODO: Check users privelege (Can be done later)

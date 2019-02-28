@@ -11,7 +11,10 @@ This is a program that holds the definitions of the methods and classes defined 
 
 using std::string;
 
-//Method: User
+//Method: User (basic constructor)
+User::User(){}
+
+//Method: User (with params)
 User::User(string UserName, string accountType, double creditAmount){
 	//"this" refers to the instance of the duplicate variables belonging to the Object
     this->UserName = UserName;
