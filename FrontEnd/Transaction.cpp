@@ -179,11 +179,56 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
 }
 
 //Method: refund
-void Transaction::refund(string userNameBuy, string userNameSell, double creditAmount){
-
+void Transaction::refund(string UserAccount /*should be using User object*/){
+	string transactionresult;
+	string buyerName; //Will become User objects in future.
+	string sellerName; //Will become User objects in future.
+	double creditTransfer; 
+	//TODO: CHECK USERS PRIVELEGE (can be done later) 
+	//Prompt user for buyer username
+	cout << "Please enter the buyers username: ";
+	cin >> buyerName;
+	//TODO: Check valid buyer username format
+	if (buyerName.size() <= 15 && buyerName.size() >= 0){
+		//Continue Transaction
+	} else {
+		//End Transaction
+	}
+	//TODO: Check if buyer username exists
+	//Prompt user for seller username
+	cout << endl;
+	cout << "Please enter the sellers username: ";
+	cin >> sellerName;
+	//TODO: Check valid seller username format
+	if (sellerName.size() <= 15 && sellerName.size() >= 0){
+		//Continue Transaction
+	} else {
+		//End Transaction
+	}
+	//TODO: Check if seller username exists
+	//Prompt user for amount of credit
+	cout << endl;
+	cout << "Please enter the credit to refund: ";
+	cin >> creditTransfer;
+	//TODO: Check valid credit entry
+	if (creditTransfer >= 0.00 && creditTransfer <= 999999.99 && creditTransfer == ((double) creditTransfer)){
+		//Continue Transaction
+	} else {
+		// End transaction
+	}
+	//TODO: Check if entered credit amount can be removed from the sellers account.
+	//TODO: Check if entered credit amount causes buyers credit to exceed maximum.
+	//TODO: Update buyer and seller accounts
+	//TODO: Output to the daily transaction file.
 }
 
 //Method: addCredit
-void Transaction::addCredit(double creditAmount, string userName){
-
+void Transaction::addCredit(string UserAccount){
+	string inputAccount;
+	double creditTransfer;
+	//TODO: Check users privelege (Can be done later)
+	//TODO: Check if recieverAccount exists
+	//TODO: Check if sufficient credits to be transfered.
+	
+	//TODO:
 }
