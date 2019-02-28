@@ -56,7 +56,6 @@ void fileOutput(string result){
 //Transaction Methods 
 //Method: login
 void Transaction::login(string UserName, string temp, bool &nameExists, User &currentUser){
-
     nameExists = 0;
 
         if (UserName.size() < 15){
@@ -72,11 +71,11 @@ void Transaction::login(string UserName, string temp, bool &nameExists, User &cu
 		}
        
       if(nameExists == 1){
-        	cout << "Welcome User: " <<  UserName << endl;;
+        	cout << "Welcome User: " <<  UserName << endl;
         
-			currentUser.UserName = temp.substr(0,15);
-			currentUser.accountType = temp.substr(17,18);
-			currentUser.creditAmount = stod(temp.substr(20,28));
+			currentUser.UserName = string(temp.begin(), temp.begin() + 15);//temp.substr(0,15);
+			currentUser.accountType =string(temp.begin()+16 , temp.begin() + 18);//temp.substr(0,15);
+			currentUser.creditAmount = stod(temp.substr(19,26));
 			//currentUser = user;
       }
 	}

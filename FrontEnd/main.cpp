@@ -18,7 +18,7 @@ This is a program that handles ticket sales:
 using namespace std;
 Transaction transaction;
 User currentUser;
-
+string first;
 
 /*
     This funtion is called when the user logs out.
@@ -64,8 +64,19 @@ int main(int argc, char const *argv[]){
         inFile.close();
    }else{
         cout << "Welcome to FooBar Ticket Service" << endl;
-        cout << "Please Enter A User Name: ";
-        readCurrentUser("Current_User_Accounts_File.txt");
+		
+		while (first != "login"){
+			cout << "Please enter login to begin: ";
+			getline(cin, first);
+			if (first == "login"){
+        		cout << "Please Enter A User Name: ";
+        		readCurrentUser("Current_User_Accounts_File.txt");
+			} else if (first == "logout"){
+				transaction.logout();
+			} else {
+				cout << "Please enter login to start the service, or enter logout to exit this." << endl;
+			}
+		}
 
     }
 
@@ -99,8 +110,8 @@ void readCurrentUser(string filename){
 	
         
         transaction.login(new_username, temp, nameExists, currentUser);
-        //cout << currentUser.accountType << endl;
-
+        cout << currentUser.getAccountType() << endl;
+		cout << currentUser.getCreditAmount() << endl;
        while(nameExists == 1){
         cout << "Enter The Command: ";
         cin >> cmd;
