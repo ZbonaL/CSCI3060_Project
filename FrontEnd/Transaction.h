@@ -50,7 +50,7 @@ class Transaction{
 	@returns: Buys a ticket for the user
 
 */
-		void buy(std::string eventname, std::string sellername, int ticketQuantity);
+		void buy(User user);
 		
 /* 
 	This function is called when a sell transaction is issued

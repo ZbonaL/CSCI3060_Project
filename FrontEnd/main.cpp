@@ -78,7 +78,7 @@ void readCurrentUser(string filename){
     bool nameExists = 0;
     file_input.open(filename.c_str());
 
-    char cmd;
+    string cmd;
     
     string new_username;
     string eventTitle;
@@ -97,48 +97,47 @@ void readCurrentUser(string filename){
         string temp = "";
         getline(file_input, temp);
 	
+        
         transaction.login(new_username, temp, nameExists, currentUser);
+        //cout << currentUser.accountType << endl;
 
-       if(nameExists == 1){
+       while(nameExists == 1){
         cout << "Enter The Command: ";
         cin >> cmd;
 
-        switch(cmd){
-            case 'l': 
-            transaction.logout();
-            break;
-
-            case 'c':
-            break;
-
-            case 'd':
-            break;
-
-            case 'b':
-            transaction.buy(eventTitle, sellername, ticketQuantity);
-            break;
-
-            case 's':
-            transaction.sell(eventTitle, ticketQuantity, ticketPrice);
-            break;
-
-            case 'r':
-			transaction.refund(currentUser);
-            break;
-
-            case 'a':
-            break;
-
-            // default:
+        if(cmd == "logout"){
+         transaction.logout();
         }
+        else if(cmd == "create"){
+           
         }
+        else if(cmd == "delete"){
+    
+        }
+        else if(cmd == "buy"){
+            transaction.buy(currentUser);
+        }
+        else if(cmd == "sell"){
+      
+        }
+        else if(cmd == "refund"){
+            transaction.refund(currentUser);
+        }
+        else if(cmd == "addcredit"){
+        
+        }
+        
+       }
+   
+       
 
     if(file_input.eof()&&(nameExists == 0)){
         cout << "User doesnt exist." << endl;
-        }
+    }
     }
     file_input.close();
 }
+
 
 void dailyTransaction(string transactionID, string result){
     string filename = "TransactionTest.txt"; 

@@ -72,10 +72,11 @@ void Transaction::login(string UserName, string temp, bool &nameExists, User &cu
 		}
        
       if(nameExists == 1){
-        	cout << "Welcome User: " <<  UserName << endl;
+        	cout << "Welcome User: " <<  UserName << endl;;
+        
 			currentUser.UserName = temp.substr(0,15);
-			currentUser.accountType = temp.substr(16,17);
-			currentUser.creditAmount = stod(temp.substr(19,27));
+			currentUser.accountType = temp.substr(17,18);
+			currentUser.creditAmount = stod(temp.substr(20,28));
 			//currentUser = user;
       }
 	}
@@ -134,18 +135,27 @@ void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice
 
 
 //Method: buy
-void Transaction::buy(string eventname, string sellername, int ticketQuantity){
-    string confirm;
+void Transaction::buy(User buyerAccount){
+    string eventname;
+    string sellername;
+    int ticketQuantity;
+
+    char confirm;
     string result;
     
     cout << "Enter the Title of the Event: ";
     cin >> eventname;
 
+while(buyerAccount.getAccountType().compare("SS") != 0){
 
-    while (eventname.size() > 0 && eventname.size() < 25){
+if(eventname.size() > 0 && eventname.size() <= 25){
         cout << "Enter the Username of the Seller: ";
         cin >> sellername;
-        
+}
+else{
+        cout << "Sorry that was an Invalid event: Logging Out " << endl;
+        logout();
+}
 //Seller Stuff
     if(sellername.size() == 0 || sellername.size() > 15){
          cout << "Invalid Seller. Logging Out " << endl;
@@ -163,23 +173,19 @@ void Transaction::buy(string eventname, string sellername, int ticketQuantity){
     }
     else{
         cout << "Do You confirm the transaction [y/n]: ";
-        cin >> confirm;
+        switch(confirm){
+                        case 'y':
+                        cout << "Successful Transaction" << endl;
+                        logout();
+
+                        case 'n':
+                        cout << "Transaction Cancelled" << endl;
+                        logout();
+                    }
     }
-
-        if(confirm == "y"){
-            cout << "Transaction Completed. Logging Out " << endl;
-            result = eventname + sellername + to_string(ticketQuantity);
-            fileOutput(result);
-            logout();
-        }
-
-        else if (confirm == "n"){
-            cout << "Transaction Cancelled. Logging Out " << endl;
-            logout();
-        }
-}
-        cout << "Sorry that was an Invalid event: Logging Out " << endl;
-        logout();
+    }
+    cout << "It is a Sell Standard" << endl;
+    logout();
 }
 
 //Method: refund
