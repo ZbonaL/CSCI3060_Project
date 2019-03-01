@@ -75,6 +75,7 @@ int main(int argc, char const *argv[]){
 				transaction.logout();
 			} else {
 				cout << "Please enter login to start the service, or enter logout to exit this." << endl;
+         
 			}
 		}
 
@@ -110,8 +111,8 @@ void readCurrentUser(string filename){
 	
         
         transaction.login(new_username, temp, nameExists, currentUser);
-        cout << currentUser.getAccountType() << endl;
-		cout << currentUser.getCreditAmount() << endl;
+        // cout << currentUser.getAccountType() << endl;
+		// cout << currentUser.getCreditAmount() << endl;
        while(nameExists == 1){
         cout << "Enter The Command: ";
         cin >> cmd;
@@ -129,7 +130,7 @@ void readCurrentUser(string filename){
             transaction.buy(currentUser);
         }
         else if(cmd == "sell"){
-      
+            transaction.sell(currentUser);
         }
         else if(cmd == "refund"){
             transaction.refund(currentUser);

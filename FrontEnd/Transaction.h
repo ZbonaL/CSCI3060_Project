@@ -60,7 +60,7 @@ class Transaction{
 	@returns: Sells a ticket for the user.
 
 */
-		void sell(std::string eventTitle, int ticketQuantity, double ticketPrice);
+		void sell(User user);
 
 /* 
 	This function is called when a User is being created

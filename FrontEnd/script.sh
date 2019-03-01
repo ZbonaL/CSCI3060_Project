@@ -5,8 +5,10 @@ for t in "LoginInput" "LogoutInputs" "AddCreditInputs" "BuyInput" "CreateInput" 
 	echo "Running tests for: $t"
 	for i in ../Tests/TestInputs/$t/*.input
 	  do
-		echo "${i%.input}"
-		cat "$i"
+		# echo "${i%.input}"
+		echo "$i"
+		# cat "$i"
+		./output < $i
     done    
 done
 

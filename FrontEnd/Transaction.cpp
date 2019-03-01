@@ -97,15 +97,24 @@ void Transaction::deleteUser(string userName){
 }
 
 //Method: sell
-void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice){
+void Transaction::sell(User sellerAccount){
     string result;
+    string eventTitle;
+    int ticketQuantity;
+    double ticketPrice;
 
+while(sellerAccount.getAccountType().compare("BS") != 1){ // As long as the user is not BS
     cout << "Enter the Event Title: ";
     cin >> eventTitle;
 
-    while (eventTitle.size() <= 25 && eventTitle.size() > 0){
+    if (eventTitle.size() <= 25 && eventTitle.size() > 0){
         cout << "Enter the amount of tickets to sell: ";
         cin >> ticketQuantity;  
+    }
+    else{
+    cout << "Length of Event exceeded maximum length" << endl;
+    logout();
+    }
 
         if(ticketQuantity == 0 || ticketQuantity > 100){
             cout << "Logging out for either no Quanitity or exceeding Maximum" << endl;
@@ -126,8 +135,7 @@ void Transaction::sell(string eventTitle, int ticketQuantity, double ticketPrice
             logout();
         }   
     }
-    cout << "Length of Event exceeded maximum length" << endl;
-    logout();
+   
 }
 
 
@@ -145,7 +153,7 @@ void Transaction::buy(User buyerAccount){
     cout << "Enter the Title of the Event: ";
     cin >> eventname;
 
-while(buyerAccount.getAccountType().compare("SS") != 0){
+while(buyerAccount.getAccountType().compare("SS") != 1){
 
 if(eventname.size() > 0 && eventname.size() <= 25){
         cout << "Enter the Username of the Seller: ";
