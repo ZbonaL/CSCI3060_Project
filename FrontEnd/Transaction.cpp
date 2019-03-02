@@ -40,7 +40,52 @@ string sellerN;
 int ticketQ;
 double ticketPrice;
 double transactCredit;
-
+//Checks if user exists
+bool checkUserExists(string username){
+	std::ifstream input;
+	string currentReadName = "";
+	string filename = "Current_User_Accounts_File.txt";
+    input.open(filename.c_str());
+	if(input.fail()){
+        cout << "Reading of current user file has failed." << endl;
+        return false;
+    }
+	while (!input.eof()) {
+		getline(input, currentReadName);
+		cout << "Checking if " << username << " is the same as this: " << currentReadName << endl;
+		if (username.size() <= 15){
+			username += (string(15 - username.size(), ' '));
+        	if (username == string(currentReadName.begin(), currentReadName.begin() + 15)){
+                return true;
+        	} else {
+				return false;
+			}
+		}
+	}
+}
+//Checks if ticket exists
+bool checkTicketExists(string ticketname){
+	std::ifstream input;
+	string currentReadName = "";
+	string filename = "Available_Tickets_File.txt";
+    input.open(filename.c_str());
+	if(input.fail()){
+        cout << "Reading of available tickets file has failed." << endl;
+        return false;
+    }
+	while (!input.eof()) {
+		getline(input, currentReadName);
+		cout << "Checking if " << ticketname << " is the same as this: " << currentReadName << endl;
+		if (ticketname.size() <= 25){
+			ticketname += (string(25 - ticketname.size(), ' '));
+        	if (ticketname == string(currentReadName.begin(), currentReadName.begin() + 25)){
+                return true;
+        	} else {
+				return false;
+			}
+		}
+	}
+}
 //Transaction Methods 
 //Transaction Methods 
 //Method: login
@@ -181,28 +226,6 @@ while(buyerAccount.getAccountType().compare("SS") != 1){
     logout();
 }
 
-bool checkUserExists(string username){
-	std::ifstream input;
-	string currentReadName = "";
-	string filename = "Current_User_Accounts_File.txt";
-    input.open(filename.c_str());
-	if(input.fail()){
-        cout << "Reading of current user file has failed." << endl;
-        return false;
-    }
-	while (!input.eof()) {
-		getline(input, currentReadName);
-		cout << "Checking if " << username << " is the same as this: " << currentReadName << endl;
-		if (username.size() <= 15){
-			username += (string(15 - username.size(), ' '));
-        	if (username == string(currentReadName.begin(), currentReadName.begin() + 15)){
-                return true;
-        	} else {
-				return false;
-			}
-		}
-	}
-}
 //Method: refund
 void Transaction::refund(User UserAccount){
 	string transactionresult;
