@@ -30,9 +30,6 @@ Transaction::Transaction(){
 string cmd;
 string result;
 
-string newUser;
-string accountType;
-double userCredit;
 
 string currUser;
 string existUser;
@@ -43,15 +40,6 @@ string sellerN;
 int ticketQ;
 double ticketPrice;
 double transactCredit;
-
-void fileOutput(string result){
-    std::ofstream file("TransactionTest.txt", std::ios::app);
-    if(file.is_open() ==  true){
-        file << result;
-        file.close();
-    }
-}
-
 
 //Transaction Methods 
 //Method: login
@@ -105,37 +93,41 @@ void Transaction::sell(User sellerAccount){
 
 while(sellerAccount.getAccountType().compare("BS") != 1){ // As long as the user is not BS
     cout << "Enter the Event Title: ";
-    cin >> eventTitle;
 
-    if (eventTitle.size() <= 25 && eventTitle.size() > 0){
-        cout << "Enter the amount of tickets to sell: ";
-        cin >> ticketQuantity;  
+    cin.ignore();
+    getline(cin, eventTitle, '\n');
+
+    if ((eventTitle.size() > 25 )|| (eventTitle.empty() == true)){
+         cout << "Length of Event exceeded maximum length" << endl;
+        logout();
     }
+
     else{
-    cout << "Length of Event exceeded maximum length" << endl;
-    logout();
+        cout << "Enter the amount of tickets to sell: ";
+        cin >> ticketQuantity;
     }
 
-        if(ticketQuantity == 0 || ticketQuantity > 100){
-            cout << "Logging out for either no Quanitity or exceeding Maximum" << endl;
-            logout();
-        }
-        else{
-            cout << "Enter the price for each ticket: ";
-            cin >> ticketPrice;
-        }
-        if (ticketPrice > 999.99){
-            cout << "Logging out for Exceeding Maximum Price" << endl;
-            logout();
-        }
-        else{
-            cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
-            result = eventTitle + to_string(ticketQuantity) + to_string(ticketPrice);
-            fileOutput(result);
-            logout();
+    if(ticketQuantity == NULL || ticketQuantity > 100){
+        cout << "Logging out for either no Quanitity or exceeding Maximum" << endl;
+        logout();
+    }
+        
+    else{
+        cout << "Enter the price for each ticket: ";
+        cin >> ticketPrice;
+    }
+
+    if (ticketPrice > 999.99){
+        cout << "Logging out for Exceeding Maximum Price" << endl;
+        logout();
+    }
+
+    else{
+        cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
+        result = eventTitle + to_string(ticketQuantity) + to_string(ticketPrice);
+        logout();
         }   
     }
-   
 }
 
 
@@ -155,19 +147,22 @@ void Transaction::buy(User buyerAccount){
 
 while(buyerAccount.getAccountType().compare("SS") != 1){
 
-if(eventname.size() > 0 && eventname.size() <= 25){
+    if(eventname.size() > 0 && eventname.size() <= 25){
         cout << "Enter the Username of the Seller: ";
         cin >> sellername;
-}
-else{
+    }
+
+    else{
         cout << "Sorry that was an Invalid event: Logging Out " << endl;
         logout();
-}
+    }
+
 //Seller Stuff
     if(sellername.size() == 0 || sellername.size() > 15){
          cout << "Invalid Seller. Logging Out " << endl;
          logout();
         }
+    
     else{
        cout << "Enter the amount of Tickets: ";
        cin >> ticketQuantity;
@@ -178,19 +173,13 @@ else{
         cout << "Invalid Amount of Tickets. Logging Out " << endl;
         logout();
     }
-    else{
-        cout << "Do You confirm the transaction [y/n]: ";
-        switch(confirm){
-                        case 'y':
-                        cout << "Successful Transaction" << endl;
-                        logout();
 
-                        case 'n':
-                        cout << "Transaction Cancelled" << endl;
-                        logout();
-                    }
+    else{
+        cout << "Transaction Done" << endl;
+       
+            }
     }
-    }
+
     cout << "It is a Sell Standard" << endl;
     logout();
 }
