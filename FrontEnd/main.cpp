@@ -19,7 +19,6 @@ using namespace std;
 Transaction transaction;
 User currentUser;
 string first;
-//Ticket currentTicket;
 
 /*
     This funtion is called when the user logs out.
@@ -116,10 +115,8 @@ void readCurrentUser(string filename){
 		// cout << currentUser.getCreditAmount() << endl;
        while(nameExists == 1){
         cout << "Enter The Command: ";
-    
-        cin >> cmd;
-       
-   
+        getline(cin, cmd);
+
         if(cmd == "logout"){
          transaction.logout();
         }
@@ -131,7 +128,6 @@ void readCurrentUser(string filename){
         }
         else if(cmd == "buy"){
             transaction.buy(currentUser);
-        
         }
         else if(cmd == "sell"){
             transaction.sell(currentUser);

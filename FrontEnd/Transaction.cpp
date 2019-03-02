@@ -42,20 +42,19 @@ double ticketPrice;
 double transactCredit;
 
 //Transaction Methods 
+//Transaction Methods 
 //Method: login
 void Transaction::login(string UserName, string temp, bool &nameExists, User &currentUser){
     nameExists = 0;
 
-        if (UserName.size() < 15){
+        if (UserName.size() <= 15){
 			UserName += (string(15 - UserName.size(), ' '));
-
-            if (UserName == temp.substr(0,15)){
+		
+        	if (UserName == temp.substr(0,15)){
                 nameExists = 1;
-            }
-
-            else {
-			nameExists = 0;
-		}
+        	} else {
+				nameExists = 0;
+			}
 		}
        
       if(nameExists == 1){
@@ -64,10 +63,8 @@ void Transaction::login(string UserName, string temp, bool &nameExists, User &cu
 			currentUser.UserName = string(temp.begin(), temp.begin() + 15);//temp.substr(0,15);
 			currentUser.accountType =string(temp.begin()+16 , temp.begin() + 18);//temp.substr(0,15);
 			currentUser.creditAmount = stod(temp.substr(19,26));
-			//currentUser = user;
       }
 	}
-
 //Method: logout 
 void Transaction::logout(){
     exit(0);
@@ -184,8 +181,30 @@ while(buyerAccount.getAccountType().compare("SS") != 1){
     logout();
 }
 
+bool checkUserExists(string username){
+	std::ifstream input;
+	string currentReadName = "";
+	string filename = "Current_User_Accounts_File.txt";
+    input.open(filename.c_str());
+	if(input.fail()){
+        cout << "Reading of current user file has failed." << endl;
+        return false;
+    }
+	while (!input.eof()) {
+		getline(input, currentReadName);
+		cout << "Checking if " << username << " is the same as this: " << currentReadName << endl;
+		if (username.size() <= 15){
+			username += (string(15 - username.size(), ' '));
+        	if (username == string(currentReadName.begin(), currentReadName.begin() + 15)){
+                return true;
+        	} else {
+				return false;
+			}
+		}
+	}
+}
 //Method: refund
-void Transaction::refund(User UserAccount /*should be using User object*/){
+void Transaction::refund(User UserAccount){
 	string transactionresult;
 	string buyerName; //Will become User objects in future.
 	string sellerName; //Will become User objects in future.
@@ -195,43 +214,39 @@ void Transaction::refund(User UserAccount /*should be using User object*/){
 		//Continue refund.
 		//Prompt user for buyer username
 		cout << "Please enter the buyers username: ";
-		cin >> buyerName;
+		getline(cin, buyerName);
 		//TODO: Check valid buyer username format
 		if (buyerName.size() <= 15 && buyerName.size() >= 0){
 			//Continue Transaction
 			//TODO: Check if buyer username exists
-			//Prompt user for seller username
-			cout << endl;
-			cout << "Please enter the sellers username: ";
-			cin >> sellerName;
-			//TODO: Check valid seller username format
-			if (sellerName.size() <= 15 && sellerName.size() >= 0){
-				//Continue Transaction
-				//TODO: Check if seller username exists
-				//Prompt user for amount of credit
+			if (checkUserExists(buyerName) == true){
+				cout << "Valid buyer profile found.";
+				//Prompt user for seller username
 				cout << endl;
-				cout << "Please enter the credit to refund: ";
-				cin >> creditTransfer;
-				//TODO: Check valid credit entry
-				if (creditTransfer >= 0.00 && creditTransfer <= 999999.99 && creditTransfer == ((double) creditTransfer)){
-				//Continue Transaction
-				//TODO: Check if entered credit amount can be removed from the sellers account.
-				//TODO: Check if entered credit amount causes buyers credit to exceed maximum.
-				//TODO: Update buyer and seller accounts
-				//TODO: Output to the daily transaction file.
+				cout << "Please enter the sellers username: ";
+				getline(cin, sellerName);
+				//TODO: Check valid seller username format
+				if (sellerName.size() <= 15 && sellerName.size() >= 0){
+					//Continue Transaction
+					//TODO: Check if seller username exists
+					//Prompt user for amount of credit
+					cout << endl;
+					cout << "Please enter the credit to refund: ";
+					cin >> creditTransfer;
+					//TODO: Check valid credit entry
+				} else {
+					// End transaction for invalid seller username
+				}
 			} else {
-				//End Transaction
-			}
-			
-			
-			} else {
-				// End transaction
+				//End Transaction for non existing buyername.
+				cout << "The buyer name you have entered is non existant." << endl;
 			}
 		} else {
-			//End Transaction
+			//End Transaction for invalid buyer username
+			cout << "The buyer name you have entered is formatted incorrectly." << endl;
 		}
 	} else {
-		//End Transaction
+		//End Transaction for non admin user
 		cout << "Only users with admin priveleges can make refunds." << endl;
 	}
 	
