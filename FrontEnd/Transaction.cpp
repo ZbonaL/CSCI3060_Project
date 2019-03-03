@@ -376,12 +376,87 @@ void Transaction::refund(User UserAccount){
 }
 
 //Method: addCredit
-void Transaction::addCredit(){
+void Transaction::addCredit(User user){
 	string inputAccount;
-	double creditTransfer;
-	//TODO: Check users privelege (Can be done later)
-	//TODO: Check if recieverAccount exists
-	//TODO: Check if sufficient credits to be transfered.
+	string creditTransfer;
+	double credit;
+	User recieverAccount;
+	bool validCredit = false;
+	string transactionresult;
 	
-	//TODO:
+
+	if (user.getAccountType() == "AA"){
+		cout << "Admin user detected." << endl;
+		cout << "Please enter the username of the account to add credit too: ";
+		getline(cin, inputAccount);
+		if (inputAccount.size() <= 15 && inputAccount.size() >= 0){
+			if (checkUserExists(inputAccount, recieverAccount) == true) {
+				//Prompt user for credit to be entered.
+				cout << "Enter how much credit to add to the account: ";
+				getline(cin, creditTransfer);
+				cout << endl;
+				try {	//Try to convert string to double
+  					credit = stod(creditTransfer); 
+					validCredit = true;
+ 				}
+  					catch (const std::invalid_argument& ia) { // Catch error and end transaction if fail
+  				}
+				if (credit >= 0.00 && credit <= 1000.00 && validCredit == true){
+					if ((credit + recieverAccount.getCreditAmount()) < 999999.99){
+						//ADDCREDIT transaction functions here for admin users.
+						recieverAccount.setCredit(recieverAccount.getCreditAmount() + credit);
+						creditTransfer = formatDouble(user.getCreditAmount());
+						transactionresult = "06 " + user.getUserName() + " " + user.getAccountType() + " " + creditTransfer;
+						printTransaction(transactionresult);
+						cout << "TRANSACTION COMPLETE!" << endl;
+					} else {
+						//End transaction if amount of credit cannot be added to buyers account.
+						cout << "reciever account has too much credit to transfer this much" << endl;
+					}
+				
+				} else {
+					//End transaction if invalid credit entered.
+				}
+				//TODO: Check if maximum credits not reached on reciever
+			} else {
+				//End transaction if buyer name is not valid	
+				cout << "Account entered is not valid, exiting transaction." << endl;
+			}
+		} else {
+			//End transaction if buyer name is invalid format
+			cout << "Invalid format, exiting transaction." << endl;
+		}
+		
+	} else {
+		//Continue transaction as a non admin.
+		//TODO: Check if sufficient credits to be transfered.
+		//TODO: Check if maximum credits not reached on reciever
+		cout << "Enter how much credit to add to your account: ";
+		getline(cin, creditTransfer);
+		cout << endl;
+		try {	//Try to convert string to double
+  			credit = stod(creditTransfer); 
+			validCredit = true;
+ 		}
+ 		catch (const std::invalid_argument& ia) { // Catch error and end transaction if fail
+  		}
+		if (credit >= 0.00 && credit <= 1000.00 && validCredit == true){
+			if ((credit + recieverAccount.getCreditAmount()) < 999999.99){
+				//ADDCREDIT transaction functions here for non admin users
+				recieverAccount.setCredit(recieverAccount.getCreditAmount() + credit);
+				creditTransfer = formatDouble(user.getCreditAmount());
+				transactionresult = "06 " + user.getUserName() + " " + user.getAccountType() + " " + creditTransfer;
+				printTransaction(transactionresult);
+				cout << "TRANSACTION COMPLETE!" << endl;
+			} else {
+				//End transaction if amount of credit cannot be added to buyers account.
+				cout << "Reciever account has too much credit to transfer this much." << endl;
+			}
+				
+		} else {
+			//End transaction if invalid credit entered.
+			cout << "The amount of credit you have entered is invalid. (Can only transfer up to 1000 credits)" << endl;
+		}
+	}
+	
 }

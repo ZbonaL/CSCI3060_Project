@@ -93,6 +93,6 @@ class Transaction{
 			 string userName: the name of the User being given credit (USED FOR ADMIN ONLY)
 	@returns: Constructs the User object.
 */
-		void addCredit();
+		void addCredit(User user);
 };
 #endif // Ends the ifndef condition
