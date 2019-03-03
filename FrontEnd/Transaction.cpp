@@ -205,14 +205,14 @@ void Transaction::deleteUser(User adminUser){
     User deleteUserCheck;
 
     if(adminUser.getAccountType() == "AA"){
-        cout << "Enter an Account to Delete from the System ";
+        cout << "Enter an Account to Delete from the System: ";
         getline(cin, userToDel, '\n');
         
 
 	    if(checkUserExists(userToDel, deleteUserCheck) == true){ //Check that the user exists
 
         if(deleteUserCheck.getUserName() != adminUser.getUserName()){ // Check that user is not the current one
-			transactionresult = "02 " + deleteUserCheck.getUserName() + " " + deleteUserCheck.getAccountType() + " " + to_string(deleteUserCheck.getCreditAmount());
+			transactionresult = "02 " + deleteUserCheck.getUserName() + " " + deleteUserCheck.getAccountType() + " " + formatDouble(deleteUserCheck.getCreditAmount());
 			cout << transactionresult << endl;
             }
             else{
@@ -254,7 +254,7 @@ while(sellerAccount.getAccountType() != "BS"){ // As long as the user is not BS
 
             if(ticketQuantity.empty() != true && stoi(ticketQuantity) <= 100){
 				event.setEventQuantity(stoi(ticketQuantity));
-				transactionresult = "04 " + event.getEventTitle() +  " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + to_string(event.getTicketPrice());
+				transactionresult = "04 " + event.getEventTitle() +  " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + formatDouble(event.getTicketPrice());
                 cout << transactionresult << endl;
 				cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
                 logout();
@@ -294,6 +294,12 @@ while(buyerAccount.getAccountType() != "SS"){
     if(eventname.empty() != true && eventname.size() <= 25){
 
         if(checkTicketExists(eventname, event) == true ){
+
+			cout << endl;
+			cout << "Tickets Remaining: " + to_string(event.getTicketQuantity()) << endl;
+			cout << "Price Per Ticket: " + to_string(event.getTicketPrice()) << endl;
+			cout << endl;
+
         	cout << "Enter the Username of the Seller: ";
         	getline(cin, sellername, '\n');
 
@@ -310,7 +316,7 @@ while(buyerAccount.getAccountType() != "SS"){
 
 						if(event.getTicketQuantity() != 0){
 							string confirm;
-							cout << "Would you like to Continue the Payment?: [Yes/No]";
+							cout << "Would you like to Continue the Payment?: [yes/no]";
 							getline(cin, confirm, '\n');
 
 							if(confirm == "yes"){	
@@ -319,9 +325,9 @@ while(buyerAccount.getAccountType() != "SS"){
 									double buyercreditR = buyerAccount.getCreditAmount() - totalPrice;
 									double sellercredR = seller.getCreditAmount() + (stod(ticketQuantity) * event.getTicketPrice());
 									int remainingTickets = event.getTicketQuantity() - stoi(ticketQuantity);
-									transactionresult = "04 " + event.getEventTitle() + " " + event.getEventSeller() + " " + to_string(remainingTickets) + " " + to_string(event.getTicketPrice());  
+									transactionresult = "04 " + event.getEventTitle() + " " + event.getEventSeller() + " " + to_string(remainingTickets) + " " + formatDouble(event.getTicketPrice());  
                     				cout << transactionresult << endl;
-									printTransaction(transactionresult);
+									//printTransaction(transactionresult);
 									cout << "Transaction Done" << endl;
                     				logout();
 								}
