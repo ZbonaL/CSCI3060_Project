@@ -72,7 +72,7 @@ int main(int argc, char const *argv[]){
         		cout << "Please Enter A User Name: ";
         		readCurrentUser("Current_User_Accounts_File.txt");
 			} else if (first == "logout"){
-				transaction.logout();
+				exit(0);
 			} else {
 				cout << "Please enter login to start the service, or enter logout to exit this." << endl;
          
@@ -118,7 +118,7 @@ void readCurrentUser(string filename){
         getline(cin, cmd);
 
         if(cmd == "logout"){
-         transaction.logout();
+         transaction.logout(currentUser);
         }
         else if(cmd == "create"){
            

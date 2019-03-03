@@ -50,7 +50,6 @@ void printTransaction(string transaction){
 	if (output.fail()){
 		cout << "Reading of daily transaction file has failed." << endl;
 	}
-	cout << "Writing successful transaction to the file." << endl;
 	output << transaction+"\n";
 	output.close();
 }
@@ -145,6 +144,16 @@ void Transaction::login(string UserName, string temp, bool &nameExists, User &cu
 	}
 //Method: logout 
 void Transaction::logout(){
+	string transactionresult = "00";
+	printTransaction(transactionresult);
+	cout << "Logging out.. have a nice day!" << endl;
+	exit(0);
+}
+void Transaction::logout(User user){
+	string usersCredit = formatDouble(user.getCreditAmount());
+	string transactionresult = "00 " + user.getUserName() + " " + user.getAccountType() +" "+ usersCredit;
+	printTransaction(transactionresult);
+	cout << "Logging out.. have a nice day!" << endl;
     exit(0);
 }
 
@@ -330,6 +339,7 @@ void Transaction::refund(User UserAccount){
 									creditTransfer = formatDouble(credit);
 									transactionresult = "05 " + buyer.getUserName() + " " + seller.getUserName() +" "+ creditTransfer;
 									printTransaction(transactionresult);
+									cout << "TRANSACTION COMPLETE!" << endl;
 								} else {
 									//End transaction if amount of credit cannot be added to buyers account.
 									cout << "The buyer exceeds maximum allowed credit after transaction." << endl << "Ending transaction.." << endl;

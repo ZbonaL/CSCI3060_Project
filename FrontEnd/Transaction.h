@@ -40,8 +40,8 @@ class Transaction{
 	@params: None
 	@returns: Logs the user out of the program.
 */
+		void logout(User user);
 		void logout();
-	
 /* 
 	This function is called when a buy transaction is issued
 	@params: string eventname: the name of the event
