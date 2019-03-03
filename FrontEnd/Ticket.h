@@ -24,7 +24,8 @@ class Ticket{
 			 double TicketPrice: the price of the ticket.
 	@returns: Constructs the Ticket object.
 
-*/
+*/	
+	Ticket();
         Ticket(std::string EventTitle, int TicketQuantity, double TicketPrice);
 
 /*		
