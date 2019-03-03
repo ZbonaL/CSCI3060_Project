@@ -9,15 +9,16 @@ for t in "AddCreditInputs" "BuyInput" "CreateInput" "DeleteInput" "LoginInput" "
 	  		do
 				#echo "$i"
 				# cat "$i"
-				echo "${i%.input}" 
-				cat "$i" | ./output > out.out
+				echo "${i%.input}" > tempTran.trn
+				cat "$i" | ./output tempTran.trn > out.out
 		done    
 done
 for j in "AddCreditOutputs" "BuyOutput" "CreateOutput" "DeleteOutput" "LoginOutput" "LogoutOutput" "RefundOutput" "SellOutput"
 	do	
 		echo "Checking tests for: $j"
 		for h in ../Tests/Results/$j/*.output
-			do
+			do	
+				echo "$out.out"
 				if diff out.out $h;
 				then 
 					echo "test $j good"
