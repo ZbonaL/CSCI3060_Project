@@ -184,7 +184,7 @@ void Transaction::create(User UserAccount){
 				if(newUserName.size() <= 15 && newUserName.size() >= 0){
 					if(newUserName.size() < 15){
 						newUserName += (string(15 - newUserName.size(), ' '));
-						newUser.setUserName(newUserName);
+						newUser.setUsername(newUserName);
 						// cout << newUser.getUserName() << endl;
 						cout << "Enter User Account Type: ";
 						getline(cin, accountType, '\n');
@@ -253,32 +253,34 @@ void Transaction::deleteUser(User adminUser){
     string userToDel;
 	string adminAccount;
     User deleteUserCheck;
-
+	//Checks if Account is an Administrator
     if(adminUser.getAccountType() == "AA"){
         cout << "Enter an Account to Delete from the System: ";
         getline(cin, userToDel, '\n');
-        
-
-	    if(checkUserExists(userToDel, deleteUserCheck) == true){ //Check that the user exists
-
-        if(deleteUserCheck.getUserName() != adminUser.getUserName()){ // Check that user is not the current one
-			transactionresult = "02 " + deleteUserCheck.getUserName() + " " + deleteUserCheck.getAccountType() + " " + formatDouble(deleteUserCheck.getCreditAmount());
-			cout << transactionresult << endl;
-            }
+        //If the User exists it will proceed
+	    if(checkUserExists(userToDel, deleteUserCheck) == true){ 
+			//If the User is not the Current User it Will Proceed with the Transacavtion
+        	if(deleteUserCheck.getUserName() != adminUser.getUserName()){
+				//Prints out the Transaction by calling the function with the results as the the Parameter
+				transactionresult = "02 " + deleteUserCheck.getUserName() + " " + deleteUserCheck.getAccountType() + " " + formatDouble(deleteUserCheck.getCreditAmount());
+				printTransaction(transactionresult);
+            	}
             else{
+				//Cancels Transaction
                 cout << "ERROR: Cannot Delete Yourself" << endl;
-                logout();
             }
         }
         else{
+			//Cancels Transaction
             cout << "ERROR: Non-Existing User." << endl;
-            logout();    
         }
     }
     else{
+		//Cancels Transaction
         cout << "Not an Admin User, Try Another Command. " << endl;
     }
 }
+
 
 //Method: sell
 void Transaction::sell(User sellerAccount){
@@ -287,43 +289,50 @@ void Transaction::sell(User sellerAccount){
     string ticketQuantity;
     string ticketPrice;
 	Ticket event;
-	// event.setEventSeller(sellerAccount.getUserName());
-while(sellerAccount.getAccountType() != "BS"){ // As long as the user is not BS
+	event.setEventSeller(sellerAccount.getUserName());
+
+//Checks if the Account is a Buy-Standard Account
+while(sellerAccount.getAccountType() != "BS"){ 
     cout << "Enter the Event Title: ";
     getline(cin, eventTitle, '\n');
-    
+    //Checks if the event name has been inputted or if the input is less or equal to 25 characters
     if ((eventTitle.size() <= 25 ) && (eventTitle.empty() != true)){
+			//Used to add spaces up to 25 charcters if the name is less than 25
+			if (eventTitle.size() <= 25){
+				eventTitle += (string(25 - eventTitle.size(), ' '));
+			}
 		event.setEventTitle(eventTitle);
         cout << "Enter the price for each ticket: ";
         getline(cin, ticketPrice, '\n');
-
+    	//Checks if the ticket price has been inputted or if it is less or equal to $999.99
         if(ticketPrice.empty() != true && stod(ticketPrice) <= 999.99){
 			event.setEventPrice(stod(ticketPrice));
             cout << "Enter the amount of tickets to sell: ";
             getline(cin, ticketQuantity, '\n');
-
+			//Checks if the ticket quantity has been inputted or if the input is less or equal to 100
             if(ticketQuantity.empty() != true && stoi(ticketQuantity) <= 100){
 				event.setEventQuantity(stoi(ticketQuantity));
-				transactionresult = "04 " + event.getEventTitle() +  " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + formatDouble(event.getTicketPrice());
-                cout << transactionresult << endl;
+				//Prints out the Transaction by calling the function with the results as the the Parameter
+				transactionresult = "03 " + event.getEventTitle() +  " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + formatDouble(event.getTicketPrice());
+                printTransaction(transactionresult);
 				cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
-                logout();
             }
             else{
+				//Cancels Transaction
                 cout << "ERROR: Either no Input OR Exceeded Maximum Amount of Tickets to Sell." << endl;
-                logout();
             }    
         }
         else{
+			//Cancels Transaction
             cout << "ERROR: Either no Input OR Exceeded Maximum Price for Tickets." << endl;
-            logout();  
         }
     }
     else{
+		//Cancels Transaction
         cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Name." << endl;
-        logout();
         }  
     }
+	//Cancels Transaction
     cout << "This is a Buy-Standard Account. Please Try Another Transaction" << endl;
 }
 
@@ -333,102 +342,99 @@ void Transaction::buy(User buyerAccount){
     string sellername;
     string ticketQuantity;
 	Ticket event;
-
     User seller;
-    // Ticket event;
 
+//Checks if the Account is a Sell-Standard Account
 while(buyerAccount.getAccountType() != "SS"){
     cout << "Enter the Title of the Event: ";
     getline(cin, eventname, '\n');
-
+    //Checks if the event name has been inputted or if the input is less or equal to 25 characters
     if(eventname.empty() != true && eventname.size() <= 25){
-
+    	//Checks if the event actually exists in the Available_Tickets_File.txt
         if(checkTicketExists(eventname, event) == true ){
-
 			cout << endl;
+			//Displays the Tickets Remaining and the Price for each Ticket
 			cout << "Tickets Remaining: " + to_string(event.getTicketQuantity()) << endl;
 			cout << "Price Per Ticket: " + to_string(event.getTicketPrice()) << endl;
 			cout << endl;
-			cout << event.getEventSeller() << endl;
-			cout << seller.getUserName() << endl;
-
         	cout << "Enter the Username of the Seller: ";
         	getline(cin, sellername, '\n');
-
+    		//Checks if the seller name has been inputted or if the input is less or equal to 15 characters
         	if(sellername.empty() != true && sellername.size() <= 15){
-
+    			//Checks if the seller actually exists in the Current_User_Accounts_File.txt
             	if(checkUserExists(sellername, seller) == true && seller.getUserName() != buyerAccount.getUserName() ){
-
-					if(seller.getUserName() == event.getEventSeller()){
+    				//Checks if the seller actually is the one selling tickets in Available_Tickets_File.txt
+					if(sellername == event.getEventSeller()){
                 	cout << "Enter the amount of Tickets: ";
                 	getline(cin, ticketQuantity, '\n');
-            
+                	//Checks if the ticket quantity has been inputted or if the input is less or equal to 4
+					//Also if the Buyer is an Administrator, they can purchase more than 4 tickets
                 	if((ticketQuantity.empty() != true && stoi(ticketQuantity) <= 4) || (buyerAccount.getAccountType() == "AA" && ticketQuantity.empty() != true)){
 						double totalPrice = (stod(ticketQuantity) * event.getTicketPrice());
-
+						//Checks if the event has any tickets remaining
 						if(event.getTicketQuantity() != 0){
 							string confirm;
+							//Asks the buyer for confirmation of transaction
 							cout << "Would you like to Continue the Payment?: [yes/no]";
 							getline(cin, confirm, '\n');
-
+    						//If buy accepts it will Proceed
 							if(confirm == "yes"){	
-
+								//Checks if the buyer has enough credits to pay for the tickets.
 								if(buyerAccount.getCreditAmount() >= totalPrice){
 									double buyercreditR = buyerAccount.getCreditAmount() - totalPrice;
 									double sellercredR = seller.getCreditAmount() + (stod(ticketQuantity) * event.getTicketPrice());
 									int remainingTickets = event.getTicketQuantity() - stoi(ticketQuantity);
-									transactionresult = "04 " + event.getEventTitle() + " " + event.getEventSeller() + " " + to_string(remainingTickets) + " " + formatDouble(event.getTicketPrice());  
-                    				cout << transactionresult << endl;
-									//printTransaction(transactionresult);
+									//Prints out the Transaction by calling the function with the results as the the Parameter
+									transactionresult = "04 " + event.getEventTitle() + " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + formatDouble(event.getTicketPrice());  
+									printTransaction(transactionresult);
 									cout << "Transaction Done" << endl;
-                    				logout();
 								}
 								else{
-									cout << "Theres not enough Credit for this purchase." << endl;
-									logout();
+										//Cancels Transaction
+									cout << "ERROR: Theres not enough Credit for this purchase." << endl;
 								}
 							}
+							//Cancels Transaction
 							else if(confirm == "no"){
 							 cout << "Transaction cancelled " << endl;
-							
 							}
-								
 						}
 						else{
-							cout << "No More Tickets. Try Another Event" << endl;
-							logout();
+							//Cancels Transaction
+							cout << "ERROR: No More Tickets. Try Another Event" << endl;
 						}
                 	}
                 	else{
+						//Cancels Transaction
                 		cout << "ERROR: Either no Input OR Exceeded Maximum Amount of Tickets to Buy." << endl;
-                		logout();
-                	}
+ 						}
 					}
 					else{
-						cout << "This Seller is not selling tickets this season" << endl;
-						logout();
+						//Cancels Transaction
+						cout << "ERROR: This Seller is not selling tickets this season" << endl;
 					}
             	}
             	else{
+					//Cancels Transaction
                 	cout << "ERROR: Non-Existing User " << endl;
-                	logout();
             	}
         	}
         	else{
+				//Cancels Transaction
             	cout << "ERROR: Either no Input OR Exceeded Maximum Length for Seller Name." << endl;
-            	logout();
         	}
         }
 		else{
-         cout << "Non-Exsting Event" << endl;
-         logout();
+		 //Cancels Transaction
+         cout << "ERROR: Non-Exsting Event" << endl;
         }
     }
     else{
+		//Cancels Transaction
         cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Name." << endl;
-        logout();
         }
     }
+	//Cancels Transaction
     cout << "This is a Sell-Standard Account. Please Try Another Transaction" << endl;
 }
 

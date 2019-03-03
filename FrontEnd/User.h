@@ -69,13 +69,13 @@ class User{
 		@params: string AccountType: the account type for the user
 		@returns: Sets the new account type.
 	*/
-	void User::setAccountType(std::string AccountType);
+	void setAccountType(std::string AccountType);
 	
 	/*
 		This function is for changing the account type for the users account.
 		@params: string userName: the User Name for the user
 		@returns: Sets the new  User Name.
 	*/
-	void User::setUsername(std::string userName);
+	void setUsername(std::string userName);
 };
 #endif
