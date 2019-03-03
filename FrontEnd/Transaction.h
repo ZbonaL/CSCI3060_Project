@@ -69,7 +69,7 @@ class Transaction{
 			 double credit: the credit to be available on users account.
 	@returns: Constructs a user object, and writes it to the current user file
 */ 
-		void create(std::string userName, std::string accountType, double credit);
+		void create(User user);
 	
 /* 
 	This function is called when a User is being deleted

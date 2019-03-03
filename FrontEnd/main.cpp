@@ -121,7 +121,7 @@ void readCurrentUser(string filename){
          transaction.logout(currentUser);
         }
         else if(cmd == "create"){
-           
+          transaction.create(currentUser); 
         }
         else if(cmd == "delete"){
             transaction.deleteUser(currentUser);

@@ -27,6 +27,7 @@ Transaction::Transaction(){
 
 }
 
+string transactionresult = "";
 
 string cmd;
 string result;
@@ -112,6 +113,10 @@ bool checkTicketExists(string ticketname, Ticket &event){
 		if (ticketname.size() <= 25){
 			ticketname += (string(25 - ticketname.size(), ' '));
         	if (ticketname == string(currentReadName.begin(), currentReadName.begin() + 25)){
+				event.EventTitle = string(currentReadName.begin(), currentReadName.begin() + 25);
+				event.EventSeller = string(currentReadName.begin() + 26, currentReadName.begin() + 39);
+				event.TicketPrice = stod(currentReadName.substr(44,49));
+				event.TicketQuantity = stoi(currentReadName.substr(40,42));
                 return true;
         	} else {
 			}
@@ -144,12 +149,12 @@ void Transaction::login(string UserName, string temp, bool &nameExists, User &cu
       }
 	}
 //Method: logout 
-// void Transaction::logout(){
-// 	string transactionresult = "00";
-// 	printTransaction(transactionresult);
-// 	cout << "Logging out.. have a nice day!" << endl;
-// 	exit(0);
-// }
+void Transaction::logout(){
+	string transactionresult = "00";
+	printTransaction(transactionresult);
+	cout << "Logging out.. have a nice day!" << endl;
+	exit(0);
+}
 void Transaction::logout(User user){
 	string usersCredit = formatDouble(user.getCreditAmount());
 	string transactionresult = "00 " + user.getUserName() + " " + user.getAccountType() +" "+ usersCredit;
@@ -165,7 +170,7 @@ void Transaction::create(User UserAccount){
 	string newUserName;
 	User admin;
 	User newUser;
-	if(UserAccount.getAccountType == "AA"){
+	if(UserAccount.getAccountType() == "AA"){
 		cout << "Enter new usersname. " << endl;
 		getline(cin, adminUserName);
 		if(adminUserName.size() <= 15 && adminUserName.size() >= 0 ){
@@ -196,25 +201,29 @@ void Transaction::create(User UserAccount){
 // Delete Note: Used deleteUser instead of delete due to delete being a C++ keyword
 void Transaction::deleteUser(User adminUser){
     string userToDel;
-    User delUserCheck;
+	string adminAccount;
+    User deleteUserCheck;
 
     if(adminUser.getAccountType() == "AA"){
         cout << "Enter an Account to Delete from the System ";
         getline(cin, userToDel, '\n');
         
-        if(checkUserExists(userToDel, adminUser) == false){
 
-            if(checkUserExists(userToDel, delUserCheck) == true){\
+	    if(checkUserExists(userToDel, deleteUserCheck) == true){ //Check that the user exists
+
+        if(deleteUserCheck.getUserName() != adminUser.getUserName()){ // Check that user is not the current one
+
             //#TODO
             //Calls Transaction File Here and Writes to it
+			cout << "Transaction Sucess" + deleteUserCheck.getUserName() << endl;
             }
             else{
-                cout << "ERROR: Non-Existing User." << endl;
+                cout << "ERROR: Cannot Delete Yourself" << endl;
                 logout();
             }
         }
         else{
-            cout << "ERROR: Cannot Delete Yourself As the Current User." << endl;
+            cout << "ERROR: Non-Existing User." << endl;
             logout();    
         }
     }
@@ -229,22 +238,27 @@ void Transaction::sell(User sellerAccount){
     string eventTitle;
     string ticketQuantity;
     string ticketPrice;
-
+	Ticket event;
+	// event.setEventSeller(sellerAccount.getUserName());
 while(sellerAccount.getAccountType() != "BS"){ // As long as the user is not BS
     cout << "Enter the Event Title: ";
     getline(cin, eventTitle, '\n');
     
     if ((eventTitle.size() <= 25 ) && (eventTitle.empty() != true)){
+		event.setEventTitle(eventTitle);
         cout << "Enter the price for each ticket: ";
         getline(cin, ticketPrice, '\n');
 
         if(ticketPrice.empty() != true && stod(ticketPrice) <= 999.99){
+			event.setEventPrice(stod(ticketPrice));
             cout << "Enter the amount of tickets to sell: ";
             getline(cin, ticketQuantity, '\n');
 
             if(ticketQuantity.empty() != true && stoi(ticketQuantity) <= 100){
-                cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
-                result = eventTitle + ticketQuantity + ticketPrice;
+				event.setEventQuantity(stoi(ticketQuantity));
+				transactionresult = "04 " + event.getEventTitle() +  " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + to_string(event.getTicketPrice());
+                cout << transactionresult << endl;
+				cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
                 logout();
             }
             else{
@@ -271,6 +285,7 @@ void Transaction::buy(User buyerAccount){
     string eventname;
     string sellername;
     string ticketQuantity;
+	Ticket event;
 
     User seller;
     // Ticket event;
@@ -293,40 +308,72 @@ while(buyerAccount.getAccountType() != "SS"){
                 getline(cin, ticketQuantity, '\n');
             
         
-                if(ticketQuantity.empty() != true && stoi(ticketQuantity) <= 4){
-                    cout << "Transaction Done" << endl;
-                    logout();
-                }
-                else{
-                    cout << "ERROR: Either no Input OR Exceeded Maximum Amount of Tickets to Buy." << endl;
-                    logout();
-                }
-            }
-            else{
-                cout << "ERROR: Non-Existing User " << endl;
-                logout();
-            }
+                if(ticketQuantity.empty() != true && stoi(ticketQuantity) <= 4 ||  (buyerAccount.getAccountType() == "AA" && ticketQuantity.empty() != true)){
+					double totalPrice = (stod(ticketQuantity) * event.getTicketPrice());
+
+						if(event.getTicketQuantity() != 0){
+							string confirm;
+							cout << "Would you like to Continue the Payment?: [Yes/No]";
+							getline(cin, confirm, '\n');
+
+							if(confirm == "yes"){	
+
+								if(buyerAccount.getCreditAmount() >= totalPrice){
+									double buyercreditR = buyerAccount.getCreditAmount() - totalPrice;
+									double sellercredR = seller.getCreditAmount() + (stod(ticketQuantity) * event.getTicketPrice());
+									int remainingTickets = event.getTicketQuantity() - stoi(ticketQuantity);
+									transactionresult = "04 " + event.getEventTitle() + " " + event.getEventSeller() + " " + to_string(remainingTickets) + " " + to_string(event.getTicketPrice());  
+                    				cout << transactionresult;
+									printTransaction(transactionresult);
+									cout << "Transaction Done" << endl;
+									logout();
+								}
+								else{
+									cout << "Theres not enough Credit for this purchase." << endl;
+									logout();
+								}
+							}
+							else if(confirm == "no"){
+							 cout << "Transaction cancelled " << endl;
+
+							}
+
+						}
+						else{
+							cout << "No More Tickets. Try Another Event" << endl;
+							logout();
+						}
+                	}
+                	else{
+                		cout << "ERROR: Either no Input OR Exceeded Maximum Amount of Tickets to Buy." << endl;
+                		logout();
+                	}
+            	}
+            	else{
+                	cout << "ERROR: Non-Existing User " << endl;
+                	logout();
+            	}
+        	}
+        	else{
+            	cout << "ERROR: Either no Input OR Exceeded Maximum Length for Seller Name." << endl;
+            	logout();
+        	}
+
         }
-        else{
-            cout << "ERROR: Either no Input OR Exceeded Maximum Length for Seller Name." << endl;
+		else{
+			cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Title." << endl;
             logout();
-        }
+		}
         // }else{
         //  cout << "Non-Exsting Event" << endl;
         //  logout();
         // }
-    }
-    else{
-        cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Name." << endl;
-        logout();
-        }
-    }
+	}
     cout << "This is a Sell-Standard Account. Please Try Another Transaction" << endl;
 }
 
 //Method: refund
 void Transaction::refund(User UserAccount){
-	string transactionresult = "";
 	string buyerName; //Will become User objects in future.
 	string sellerName; //Will become User objects in future.
 	string creditTransfer; //String version of inputted credits (Is a string for getline() to work effectively.)
