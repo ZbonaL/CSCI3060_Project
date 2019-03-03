@@ -115,8 +115,8 @@ bool checkTicketExists(string ticketname, Ticket &event){
         	if (ticketname == string(currentReadName.begin(), currentReadName.begin() + 25)){
 				event.EventTitle = string(currentReadName.begin(), currentReadName.begin() + 25);
 				event.EventSeller = string(currentReadName.begin() + 26, currentReadName.begin() + 39);
-				event.TicketPrice = stod(currentReadName.substr(44,49));
-				event.TicketQuantity = stoi(currentReadName.substr(40,42));
+				event.TicketPrice = stod(currentReadName.substr(42,45));
+				event.TicketQuantity = stoi(currentReadName.substr(46,52));
                 return true;
         	} else {
 			}
@@ -299,15 +299,17 @@ while(buyerAccount.getAccountType() != "SS"){
 			cout << "Tickets Remaining: " + to_string(event.getTicketQuantity()) << endl;
 			cout << "Price Per Ticket: " + to_string(event.getTicketPrice()) << endl;
 			cout << endl;
+			cout << event.getEventSeller() << endl;
+			cout << seller.getUserName() << endl;
 
         	cout << "Enter the Username of the Seller: ";
         	getline(cin, sellername, '\n');
 
         	if(sellername.empty() != true && sellername.size() <= 15){
 
-//  seller.getUserName() == event.getEventSeller() && 
-//&& checkUserExists(sellername, buyerAccount) == false
-            	if(checkUserExists(sellername, seller) == true ){
+            	if(checkUserExists(sellername, seller) == true && seller.getUserName() != buyerAccount.getUserName() ){
+
+					if(seller.getUserName() == event.getEventSeller()){
                 	cout << "Enter the amount of Tickets: ";
                 	getline(cin, ticketQuantity, '\n');
             
@@ -351,6 +353,11 @@ while(buyerAccount.getAccountType() != "SS"){
                 		cout << "ERROR: Either no Input OR Exceeded Maximum Amount of Tickets to Buy." << endl;
                 		logout();
                 	}
+					}
+					else{
+						cout << "This Seller is not selling tickets this season" << endl;
+						logout();
+					}
             	}
             	else{
                 	cout << "ERROR: Non-Existing User " << endl;
