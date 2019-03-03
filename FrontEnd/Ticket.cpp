@@ -10,9 +10,13 @@ This is a program that holds the definitions of the methods and classes defined 
 
 using std::string;
 
+
+Ticket::Ticket(){}
+
 //Method: Ticket
-Ticket::Ticket(string EventTitle, int TicketQuantity, double TicketPrice){
+Ticket::Ticket(string EventTitle, string EventSeller, int TicketQuantity, double TicketPrice){
     this->EventTitle = EventTitle;
+    this->EventSeller = EventSeller;
     this->TicketQuantity = TicketQuantity;
     this->TicketPrice = TicketPrice;
 }
@@ -20,8 +24,16 @@ Ticket::Ticket(string EventTitle, int TicketQuantity, double TicketPrice){
 //Method: getEventTitle
 string Ticket::getEventTitle(){ return EventTitle; }
 
+//Method: getEventTitle
+string Ticket::getEventSeller(){ return EventSeller; }
+
 //Method: getTicketQuantity
 int Ticket::getTicketQuantity(){ return TicketQuantity; }
 
 //Method: getTicketPrice
 double Ticket::getTicketPrice(){ return TicketPrice; }
+
+void Ticket::setEventTitle(string EventName){EventTitle = EventName;}
+void Ticket::setEventSeller(string SellerName){EventSeller = SellerName; }
+void Ticket::setEventPrice(double EventPrice){TicketPrice = EventPrice;}
+void Ticket::setEventQuantity(int EventTickets){TicketQuantity = EventTickets;}

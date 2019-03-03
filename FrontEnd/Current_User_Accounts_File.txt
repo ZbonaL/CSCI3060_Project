@@ -19,7 +19,7 @@ newFullStan1    FS 000000.00
 newFullStan2    FS 000000.00
 newUser2        FS 000000.00
 newUser3        FS 000000.00
-ImAdmin         AA 000000.00
+ImAdmin         AA 200000.00
 BobJones0002    AA 000000.00
 login1Admin     AA 000000.00
 login1NewAdmin  AA 000000.00

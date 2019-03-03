@@ -14,6 +14,7 @@ This is a header file which defines the Ticket class, and declares all classes a
 class Ticket{
     public:
         std::string EventTitle;
+	std::string EventSeller;
         int TicketQuantity;
         double TicketPrice;
 
@@ -26,7 +27,7 @@ class Ticket{
 
 */	
 	Ticket();
-        Ticket(std::string EventTitle, int TicketQuantity, double TicketPrice);
+        Ticket(std::string EventTitle, std::string EventSeller, int TicketQuantity, double TicketPrice);
 
 /*		
 	This function is for getting the EventTitle from a Ticket object
@@ -34,6 +35,15 @@ class Ticket{
 	@returns: The event title on the Ticket object.
 */
         std::string getEventTitle();
+
+/*	
+	This function returns the number of tickets available for this Ticket object
+	@params: None
+	@returns: The ticket quantity on the Ticket object
+
+*/
+	std::string getEventSeller();
+
 
 /*	
 	This function returns the number of tickets available for this Ticket object
@@ -48,5 +58,14 @@ class Ticket{
 	@returns: The ticket price on the Ticket object
 */
         double getTicketPrice(); 
+
+
+	void setEventTitle(std::string EventName);
+
+	void setEventPrice(double EventPrice);
+
+	void setEventQuantity(int EventTickets);
+	
+	void setEventSeller(std::string SellerName);
 };
 #endif // Ends the ifndef condition

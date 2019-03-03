@@ -1,2 +1,3 @@
 SQAFunTimes               SellerJonesSS 100 010.00
-SQALabsTime               SellerJonesSS 40  010.00
+SQALabsTime               SellerJonesSS 40  110.00
+SQALabsTimes              SellerJonesSS 0   110.00
