@@ -124,7 +124,7 @@ void readCurrentUser(string filename){
            
         }
         else if(cmd == "delete"){
-    
+            transaction.deleteUser(currentUser);
         }
         else if(cmd == "buy"){
             transaction.buy(currentUser);

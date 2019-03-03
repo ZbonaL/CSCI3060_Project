@@ -76,7 +76,7 @@ class Transaction{
 	@params: string userName: the name of the User being deleted
 	@returns: Deletes the user object possessing the usernames.
 */
-		void deleteUser(std::string userName);
+		void deleteUser(User user);
 
 /* 
 	This function is called when a refund transaction is issued.

@@ -123,108 +123,112 @@ void Transaction::create(string userName, string accountType, double credit){
 
 //Method: deleteUser
 // Delete Note: Used deleteUser instead of delete due to delete being a C++ keyword
-void Transaction::deleteUser(string userName){
-
+void Transaction::deleteUser(User adminUser){
+    string userToDel;
+    if(adminUser.getAccountType() == "AA"){
+        cout << "Enter an Account to Delete from the System ";
+        getline(cin, userToDel, '\n');
+        //#TODO
+        //Calls Transaction File Here and Writes to it
+    }
+    else{
+        cout << "Not an Admin User, Try Another Command. " << endl;
+    }
 }
 
 //Method: sell
 void Transaction::sell(User sellerAccount){
     string result;
     string eventTitle;
-    int ticketQuantity;
-    double ticketPrice;
+    string ticketQuantity;
+    string ticketPrice;
 
-while(sellerAccount.getAccountType().compare("BS") != 1){ // As long as the user is not BS
+while(sellerAccount.getAccountType() != "BS"){ // As long as the user is not BS
     cout << "Enter the Event Title: ";
-
-    cin.ignore();
     getline(cin, eventTitle, '\n');
+    
 
     if ((eventTitle.size() > 25 )|| (eventTitle.empty() == true)){
-         cout << "Length of Event exceeded maximum length" << endl;
+         cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Name." << endl;
+        logout();
+    }
+
+    else{
+        cout << "Enter the price for each ticket: ";
+        getline(cin, ticketPrice, '\n');
+       
+    }
+
+    if(ticketPrice.empty() == true || stod(ticketPrice) > 999.99){
+        cout << "ERROR: Either no Input OR Exceeded Maximum Price for Tickets." << endl;
         logout();
     }
 
     else{
         cout << "Enter the amount of tickets to sell: ";
-        cin >> ticketQuantity;
-    }
+        getline(cin, ticketQuantity, '\n');
+        }  
 
-    if(ticketQuantity == NULL || ticketQuantity > 100){
-        cout << "Logging out for either no Quanitity or exceeding Maximum" << endl;
+    if(ticketQuantity.empty() == true || stoi(ticketQuantity) > 100){
+        cout << "ERROR: Either no Input OR Exceeded Maximum Amount of Tickets to Sell." << endl;
         logout();
     }
         
     else{
-        cout << "Enter the price for each ticket: ";
-        cin >> ticketPrice;
-    }
-
-    if (ticketPrice > 999.99){
-        cout << "Logging out for Exceeding Maximum Price" << endl;
-        logout();
-    }
-
-    else{
         cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
-        result = eventTitle + to_string(ticketQuantity) + to_string(ticketPrice);
+        result = eventTitle + ticketQuantity + ticketPrice;
         logout();
-        }   
+        } 
     }
+    cout << "This is a Buy-Standard Account. Please Try Another Transaction" << endl;
+    // logout();
 }
-
-
-
 
 //Method: buy
 void Transaction::buy(User buyerAccount){
     string eventname;
     string sellername;
-    int ticketQuantity;
+    string ticketQuantity;
 
-    char confirm;
     string result;
-    
+
+while(buyerAccount.getAccountType() != "SS"){
+
     cout << "Enter the Title of the Event: ";
-    cin >> eventname;
+    getline(cin, eventname, '\n');
 
-while(buyerAccount.getAccountType().compare("SS") != 1){
-
-    if(eventname.size() > 0 && eventname.size() <= 25){
-        cout << "Enter the Username of the Seller: ";
-        cin >> sellername;
-    }
-
-    else{
-        cout << "Sorry that was an Invalid event: Logging Out " << endl;
+    if(eventname.empty() == true || eventname.size() > 25){
+        cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Name." << endl;
         logout();
     }
 
+    else{
+        cout << "Enter the Username of the Seller: ";
+        getline(cin, sellername, '\n');
+    }
+
 //Seller Stuff
-    if(sellername.size() == 0 || sellername.size() > 15){
-         cout << "Invalid Seller. Logging Out " << endl;
+    if(sellername.empty() == true || sellername.size() > 15){
+         cout << "ERROR: Either no Input OR Exceeded Maximum Length for Seller Name." << endl;
          logout();
         }
     
     else{
        cout << "Enter the amount of Tickets: ";
-       cin >> ticketQuantity;
+       getline(cin, ticketQuantity, '\n');
     }
-        
-//Ticket Stuff
-    if(ticketQuantity == 0 || ticketQuantity > 4){
-        cout << "Invalid Amount of Tickets. Logging Out " << endl;
+ //Ticket Stuff   
+    if(ticketQuantity.empty() == true || stoi(ticketQuantity) > 4){
+        cout << "ERROR: Either no Input OR Exceeded Maximum Amount of Tickets to Buy." << endl;
         logout();
     }
 
     else{
-        cout << "Transaction Done" << endl;
-       
-            }
+       cout << "Transaction Done" << endl;
+        logout();
+        }
     }
-
-    cout << "It is a Sell Standard" << endl;
-    logout();
+    cout << "This is a Sell-Standard Account. Please Try Another Transaction" << endl;
 }
 
 //Method: refund
