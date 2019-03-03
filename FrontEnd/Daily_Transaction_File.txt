@@ -1,0 +1,3 @@
+05 SellerJonesSS   BuyerJonesBS    005000.00
+05 SellerJonesSS   BuyerJonesBS    000005.05
+05 SellerJonesSS   BuyerJonesBS    000010.00

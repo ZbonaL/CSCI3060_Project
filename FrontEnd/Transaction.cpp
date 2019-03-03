@@ -42,6 +42,36 @@ int ticketQ;
 double ticketPrice;
 double transactCredit;
 
+//Print to transaction to daily transaction file.
+void printTransaction(string transaction){
+	std::ofstream output;
+	string filename = "Daily_Transaction_File.txt";
+	output.open(filename.c_str(), std::fstream::app);
+	if (output.fail()){
+		cout << "Reading of daily transaction file has failed." << endl;
+	}
+	cout << "Writing successful transaction to the file." << endl;
+	output << transaction+"\n";
+	output.close();
+}
+string formatDouble(double dub){
+	string formattedDouble = to_string(dub);
+	string formattedString = "";
+	//Add decimal places if needed
+	int decimalIndex = formattedDouble.find('.');
+	if (decimalIndex == std::string::npos){
+		formattedDouble += ".00";
+	//Remove the extra decimal places if needed
+	} else {
+		formattedDouble = string(formattedDouble.begin(), formattedDouble.begin() + decimalIndex + 3);
+	}
+	if (formattedDouble.size() <= 9) {
+		formattedString += (string(9 - formattedDouble.size(), '0'));
+		formattedString += formattedDouble;
+	}
+	return formattedString;
+}
+
 //Checks if user exists
 bool checkUserExists(string username, User &user){
 	std::ifstream input;
@@ -257,42 +287,61 @@ while(buyerAccount.getAccountType() != "SS"){
 
 //Method: refund
 void Transaction::refund(User UserAccount){
-	string transactionresult;
+	string transactionresult = "";
 	string buyerName; //Will become User objects in future.
 	string sellerName; //Will become User objects in future.
-	string creditTransfer; 
-
+	string creditTransfer; //String version of inputted credits (Is a string for getline() to work effectively.)
+	double credit;	//Double version of inputted credits
+	bool validCredit = false; //Flag used for checking
 	User buyer;	
 	User seller;
-
-	//TODO: CHECK USERS PRIVELEGE (can be done later) 
 	if (UserAccount.getAccountType() == "AA") {
 		//Continue refund.
 		//Prompt user for buyer username
 		cout << "Please enter the buyers username: ";
 		getline(cin, buyerName);
-		//TODO: Check valid buyer username format
 		if (buyerName.size() <= 15 && buyerName.size() >= 0){
 			//Continue Transaction
-			//TODO: Check if buyer username exists
 			if (checkUserExists(buyerName, buyer) == true){
-				cout << "Valid buyer profile found.";
 				//Prompt user for seller username
 				cout << endl;
 				cout << "Please enter the sellers username: ";
 				getline(cin, sellerName);
-				//TODO: Check valid seller username format
 				if (sellerName.size() <= 15 && sellerName.size() >= 0){
 					//Continue Transaction
-					//TODO: Check if seller username exists
 					if (checkUserExists(sellerName, seller) == true){
-						cout << "Valid seller profile found.";
 						//Prompt user for amount of credit
 						cout << endl;
 						cout << "Please enter the credit to refund: ";
 						getline(cin, creditTransfer);
-						//TODO: Check valid credit entry
-						
+						try {	//Try to convert string to double
+  							credit = stod(creditTransfer); 
+							validCredit = true;
+ 						}
+  						catch (const std::invalid_argument& ia) { // Catch error and end transaction if fail
+  						}
+						if (credit >= 0.00 && credit <= 999999.99 && validCredit == true){
+							if (credit <= seller.getCreditAmount()){
+								if ((buyer.getCreditAmount() + credit) <= 999999.99){
+									//HERE THE REFUND ACTUALLY TAKES PLACE
+									buyer.setCredit(buyer.getCreditAmount() + credit);
+									seller.setCredit(seller.getCreditAmount() - credit);
+									//TODO: Write transaction to Daily Transaction file.
+									creditTransfer = formatDouble(credit);
+									transactionresult = "05 " + buyer.getUserName() + " " + seller.getUserName() +" "+ creditTransfer;
+									printTransaction(transactionresult);
+								} else {
+									//End transaction if amount of credit cannot be added to buyers account.
+									cout << "The buyer exceeds maximum allowed credit after transaction." << endl << "Ending transaction.." << endl;
+								}
+							} else {
+								//End transaction if amount of credit cannot be removed from sellers account.
+								cout << "The seller has insufficient credit to be transfered." << endl << "Ending transaction.." << endl;
+							}
+						} else {
+							//End transaction if invalid amount of credit entered
+							cout << "The credit you have entered is invalid, please enter a number from 0 to 999999.99" << endl;
+						}
 					} else {
 						//End transaction for non existing sellername
 						cout << "The seller name you have entered is non existant." << endl;
