@@ -168,18 +168,73 @@ void Transaction::create(User UserAccount){
 	string tranactionresult = "";	
 	string adminUserName;
 	string newUserName;
+	string accountType;
+
+	string creditAmount;
+	double credit;
+	
 	User admin;
 	User newUser;
+
 	if(UserAccount.getAccountType() == "AA"){
-		cout << "Enter new usersname. " << endl;
-		getline(cin, adminUserName);
-		if(adminUserName.size() <= 15 && adminUserName.size() >= 0 ){
+		cout << "Enter new usersname. ";
+		getline(cin, newUserName);
 			if(checkUserExists(newUserName, newUser) == false){
-				cout << endl << "Enter new Users name.";
-				getline(cin, newUserName);
+				
 				if(newUserName.size() <= 15 && newUserName.size() >= 0){
 					if(newUserName.size() < 15){
+						newUserName += (string(15 - newUserName.size(), ' '));
+						newUser.setUserName(newUserName);
+						// cout << newUser.getUserName() << endl;
+						cout << "Enter User Account Type: ";
+						getline(cin, accountType, '\n');
 
+						if((accountType == "AA") || (accountType == "FS") || 
+						   (accountType == "BS") || (accountType == "SS") ){
+							newUser.setAccountType(accountType);
+
+							cout << "Enter the user Credit amount";
+							getline(cin, creditAmount);
+							credit = stod(creditAmount);
+							
+							if(credit >= 0.0 && credit <= 999999.99){
+								newUser.setCredit(credit);
+								string paddedCredit = formatDouble(newUser.getCreditAmount());
+
+								tranactionresult = "01 " + newUser.getUserName() + " " + newUser.getAccountType() + " " + paddedCredit;
+								printTransaction(tranactionresult);
+							}else{
+								cout << "Not a valid Credit amount." << endl;
+							}
+						}else {
+							cout << "Not a valid account type." << endl;
+
+						}
+					}else{
+						cout << "Enter User Account Type: ";
+						getline(cin, accountType, '\n');
+
+						if((accountType == "AA") || (accountType == "FS") || 
+						   (accountType == "BS") || (accountType == "SS") ){
+							newUser.setAccountType(accountType);
+
+							cout << "Enter the user Credit amount";
+							getline(cin, creditAmount);
+							credit = stod(creditAmount);
+							
+							if(credit >= 0.0 && credit <= 999999.99){
+								newUser.setCredit(credit);
+								string paddedCredit = formatDouble(newUser.getCreditAmount());
+
+								tranactionresult = "01 " + newUser.getUserName() + " " + newUser.getAccountType() + " " + paddedCredit;
+								printTransaction(tranactionresult);
+							}else{
+								cout << "Not a valid Credit amount." << endl;
+							}
+						}else {
+							cout << "Not a valid account type." << endl;
+
+						}
 					}
 				}else{
 					cout << "new username is not valid." << endl;
@@ -188,14 +243,9 @@ void Transaction::create(User UserAccount){
 			}else{
 				cout << "The user already exists." << endl;
 			}
-		}else{
-			cout << "The Admin name is not valid.";
-		}
-
 	}else{
 		cout << "Only Admins can create new users." << endl;
 	}
-
 }
 //Method: deleteUser
 // Delete Note: Used deleteUser instead of delete due to delete being a C++ keyword

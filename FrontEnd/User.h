@@ -63,5 +63,19 @@ class User{
 
 */
 	void setCredit(double credit);
+
+	/*
+		This function is for changing the account type for the users account.
+		@params: string AccountType: the account type for the user
+		@returns: Sets the new account type.
+	*/
+	void User::setAccountType(std::string AccountType);
+	
+	/*
+		This function is for changing the account type for the users account.
+		@params: string userName: the User Name for the user
+		@returns: Sets the new  User Name.
+	*/
+	void User::setUsername(std::string userName);
 };
 #endif

@@ -33,3 +33,5 @@ double User::getCreditAmount(){ return creditAmount; }
 
 //Method: setCredit
 void User::setCredit(double credit){ creditAmount = credit; }
+void User::setAccountType(std::string AccountType){ accountType = AccountType ; }
+void User::setUsername(std::string userName){ UserName = userName; }
