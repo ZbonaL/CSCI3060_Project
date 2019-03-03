@@ -1,26 +1,34 @@
 touch out.out
 touch tempTran.trn
-for t in "LoginInput" "LogoutInputs" "AddCreditInputs" "BuyInput" "CreateInput" "DeleteInput" "RefundInput" "SellInput"
-  do
+# this first loop goes throught all the test inpuput folders
+for t in "AddCreditInputs" "BuyInput" "CreateInput" "DeleteInput" "LoginInput" "LogoutInputs" "RefundInput" "SellInput"
+	do
 		echo "Running tests for: $t"
+		#this loop goes through the actual inputs and adds them,
 		for i in ../Tests/TestInputs/$t/*.input
-	  	do
+	  		do
 				#echo "$i"
 				# cat "$i"
-				cat "$i" | ./output tempTran > out.out
-				for j in "LoginOutput" "LogoutOutput" "AddCreditOutputs" "BuyOutput" "CreateOutput" "DeleteOutput" "RefundOutput" "SellOutput"
-					do
-						for h in ../Tests/Results/$j/*.output
-							do
-								diff out.out "${h%}"
-								rm out.out
-								rm tempTran.trn
-								touch out.out
-								touch tempTran.trn
-						done
-				done
+				echo "${i%.input}" 
+				cat "$i" | ./output > out.out
 		done    
 done
-
+for j in "AddCreditOutputs" "BuyOutput" "CreateOutput" "DeleteOutput" "LoginOutput" "LogoutOutput" "RefundOutput" "SellOutput"
+	do	
+		echo "Checking tests for: $j"
+		for h in ../Tests/Results/$j/*.output
+			do
+				if diff out.out $h;
+				then 
+					echo "test $j good"
+				else
+					echo "test $j failed"
+				fi
+				rm out.out
+				rm tempTran.trn
+				touch out.out
+				touch tempTran.trn
+		done
+done
 rm out.out
 rm tempTran.trn
