@@ -592,16 +592,16 @@ void Transaction::addCredit(User user){
  		catch (const std::invalid_argument& ia) { // Catch error and end transaction if fail
   		}
 		if (credit >= 0.00 && credit <= 1000.00 && validCredit == true){
-			if ((credit + recieverAccount.getCreditAmount()) < 999999.99){
+			if ((credit + user.getCreditAmount()) < 999999.99){
 				//ADDCREDIT transaction functions here for non admin users
-				recieverAccount.setCredit(recieverAccount.getCreditAmount() + credit);
+				user.setCredit(user.getCreditAmount() + credit);
 				creditTransfer = formatDouble(user.getCreditAmount());
 				transactionresult = "06 " + user.getUserName() + " " + user.getAccountType() + " " + creditTransfer;
 				printTransaction(transactionresult);
 				cout << "TRANSACTION COMPLETE!" << endl;
 			} else {
 				//End transaction if amount of credit cannot be added to buyers account.
-				cout << "Reciever account has too much credit to transfer this much." << endl;
+				cout << "Your account has too much credit to transfer this much." << endl;
 			}
 				
 		} else {
