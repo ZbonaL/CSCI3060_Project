@@ -356,10 +356,6 @@ if(buyerAccount.getAccountType() != "SS"){
     	//Checks if the event actually exists in the Available_Tickets_File.txt
         if(checkTicketExists(eventname, event) == true ){
 			cout << endl;
-			//Displays the Tickets Remaining and the Price for each Ticket
-			cout << "Tickets Remaining: " + to_string(event.getTicketQuantity()) << endl;
-			cout << "Price Per Ticket: " + to_string(event.getTicketPrice()) << endl;
-			cout << endl;
         	cout << "Enter the Username of the Seller: ";
         	getline(cin, sellername, '\n');
     		//Checks if the seller name has been inputted or if the input is less or equal to 15 characters
@@ -368,6 +364,11 @@ if(buyerAccount.getAccountType() != "SS"){
             	if(checkUserExists(sellername, seller) == true && seller.getUserName() != buyerAccount.getUserName() ){
     				//Checks if the seller actually is the one selling tickets in Available_Tickets_File.txt
 					if(sellername == event.getEventSeller()){
+					//Displays the Tickets Remaining and the Price for each Ticket
+					cout << "Tickets Remaining: " + to_string(event.getTicketQuantity()) << endl;
+					cout << "Price Per Ticket: " + to_string(event.getTicketPrice()) << endl;
+					cout << endl;
+					//Enters amount of Tickets	
                 	cout << "Enter the amount of Tickets: ";
                 	getline(cin, ticketQuantity, '\n');
                 	//Checks if the ticket quantity has been inputted or if the input is less or equal to 4
