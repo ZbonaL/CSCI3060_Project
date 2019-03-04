@@ -1,42 +1,36 @@
 touch out.out
 touch tempTran.trn
-# this first loop goes throught all the test inpuput folders
 for t in "AddCreditInputs" "BuyInput" "CreateInput" "DeleteInput" "LoginInput" "LogoutInputs" "RefundInput" "SellInput"
     do
         echo "Running tests for: $t"
-        #this loop goes through the actual inputs and adds them,
         for i in ../Tests/TestInputs/$t/*.input
               do
                 #echo "$i"
                 # cat "$i"
                 echo "${i%.input}" 
-                #input the data from the input files into the c++ program
-                ./output   $i > out.out
+                cat "$i" | ./output > out.out
+        done    
+done
+#this loops through the output test folders
+for j in "AddCreditOutputs" "BuyOutput" "CreateOutput" "DeleteOutput" "LoginOutput" "LogoutOutput" "RefundOutput" "SellOutput"
+    do    
+        echo "Checking tests for: $j"
+        # loops for every file in the test folder
+        for h in ../Tests/Results/$j/*.output
+            do  
+
+                if diff out.out $h
+                then
+                    echo "test $h failed"
+                else
+                    echo "test $h worked"
+                fi
+            
                 rm out.out
                 rm tempTran.trn
                 touch out.out
-                touch tempTran.trn 
+                touch tempTran.trn
         done
-
-    #loop through all the folders in the output dir
-    for j in "AddCreditOutputs" "BuyOutput" "CreateOutput" "DeleteOutput" "LoginOutput" "LogoutOutput" "RefundOutput" "SellOutput"
-        do    
-            echo "Checking tests for: $j"
-            #loop through each of the test outputs 
-            for h in ../Tests/Results/$j/*.output
-                do    
-                    #echo "$out.out"
-                    #check if the out.out file is the same as the test outputs
-                    if diff out.out $h;
-                    then 
-                        echo "test $j failed"
-                    else
-                        echo "test $j good"
-                    fi
-            done
-    done
-    
 done
-
 rm out.out
 rm tempTran.trn

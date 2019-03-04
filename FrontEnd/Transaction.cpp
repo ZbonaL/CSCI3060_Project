@@ -84,7 +84,7 @@ bool checkUserExists(string username, User &user){
         return false;
     }
 	while (!input.eof()) {
-		getline(input, currentReadName);
+		getline(input, currentReadName,'\n');
 		if (username.size() <= 15){
 			username += (string(15 - username.size(), ' '));
         	if (username == string(currentReadName.begin(), currentReadName.begin() + 15)){
@@ -109,7 +109,7 @@ bool checkTicketExists(string ticketname, Ticket &event){
         return false;
     }
 	while (!input.eof()) {
-		getline(input, currentReadName);
+		getline(input, currentReadName,'\n');
 		if (ticketname.size() <= 25){
 			ticketname += (string(25 - ticketname.size(), ' '));
         	if (ticketname == string(currentReadName.begin(), currentReadName.begin() + 25)){
@@ -178,7 +178,7 @@ void Transaction::create(User UserAccount){
 
 	if(UserAccount.getAccountType() == "AA"){
 		cout << "Enter new usersname. ";
-		getline(cin, newUserName);
+		getline(cin, newUserName,'\n');
 			if(checkUserExists(newUserName, newUser) == false){
 				
 				if(newUserName.size() <= 15 && newUserName.size() >= 0){
@@ -194,14 +194,14 @@ void Transaction::create(User UserAccount){
 							newUser.setAccountType(accountType);
 
 							cout << "Enter the user Credit amount";
-							getline(cin, creditAmount);
+							getline(cin, creditAmount,'\n');
 							credit = stod(creditAmount);
 							
 							if(credit >= 0.0 && credit <= 999999.99){
 								newUser.setCredit(credit);
 								string paddedCredit = formatDouble(newUser.getCreditAmount());
 
-								tranactionresult = "01 " + newUser.getUserName() + " " + newUser.getAccountType() + " " + paddedCredit;
+								tranactionresult = "01" + newUser.getUserName() + " " + newUser.getAccountType() + " " + paddedCredit;
 								printTransaction(tranactionresult);
 							}else{
 								cout << "Not a valid Credit amount." << endl;
@@ -219,14 +219,14 @@ void Transaction::create(User UserAccount){
 							newUser.setAccountType(accountType);
 
 							cout << "Enter the user Credit amount";
-							getline(cin, creditAmount);
+							getline(cin, creditAmount,'\n');
 							credit = stod(creditAmount);
 							
 							if(credit >= 0.0 && credit <= 999999.99){
 								newUser.setCredit(credit);
 								string paddedCredit = formatDouble(newUser.getCreditAmount());
 
-								tranactionresult = "01 " + newUser.getUserName() + " " + newUser.getAccountType() + " " + paddedCredit;
+								tranactionresult = "01" + newUser.getUserName() + " " + newUser.getAccountType() + " " + paddedCredit;
 								printTransaction(tranactionresult);
 							}else{
 								cout << "Not a valid Credit amount." << endl;
@@ -458,21 +458,21 @@ void Transaction::refund(User UserAccount){
 		//Continue refund.
 		//Prompt user for buyer username
 		cout << "Please enter the buyers username: ";
-		getline(cin, buyerName);
+		getline(cin, buyerName,'\n');
 		if (buyerName.size() <= 15 && buyerName.size() >= 0){
 			//Continue Transaction
 			if (checkUserExists(buyerName, buyer) == true){
 				//Prompt user for seller username
 				cout << endl;
 				cout << "Please enter the sellers username: ";
-				getline(cin, sellerName);
+				getline(cin, sellerName,'\n');
 				if (sellerName.size() <= 15 && sellerName.size() >= 0){
 					//Continue Transaction
 					if (checkUserExists(sellerName, seller) == true){
 						//Prompt user for amount of credit
 						cout << endl;
 						cout << "Please enter the credit to refund: ";
-						getline(cin, creditTransfer);
+						getline(cin, creditTransfer,'\n');
 						try {	//Try to convert string to double
   							credit = stod(creditTransfer); 
 							validCredit = true;
@@ -538,12 +538,12 @@ void Transaction::addCredit(User user){
 	if (user.getAccountType() == "AA"){
 		cout << "Admin user detected." << endl;
 		cout << "Please enter the username of the account to add credit too: ";
-		getline(cin, inputAccount);
+		getline(cin, inputAccount,'\n');
 		if (inputAccount.size() <= 15 && inputAccount.size() >= 0){
 			if (checkUserExists(inputAccount, recieverAccount) == true) {
 				//Prompt user for credit to be entered.
 				cout << "Enter how much credit to add to the account: ";
-				getline(cin, creditTransfer);
+				getline(cin, creditTransfer,'\n');
 				cout << endl;
 				try {	//Try to convert string to double
   					credit = stod(creditTransfer); 
@@ -582,7 +582,7 @@ void Transaction::addCredit(User user){
 		//TODO: Check if sufficient credits to be transfered.
 		//TODO: Check if maximum credits not reached on reciever
 		cout << "Enter how much credit to add to your account: ";
-		getline(cin, creditTransfer);
+		getline(cin, creditTransfer,'\n');
 		cout << endl;
 		try {	//Try to convert string to double
   			credit = stod(creditTransfer); 
