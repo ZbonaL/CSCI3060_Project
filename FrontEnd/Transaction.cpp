@@ -115,8 +115,8 @@ bool checkTicketExists(string ticketname, Ticket &event){
         	if (ticketname == string(currentReadName.begin(), currentReadName.begin() + 25)){
 				event.EventTitle = string(currentReadName.begin(), currentReadName.begin() + 25);
 				event.EventSeller = string(currentReadName.begin() + 26, currentReadName.begin() + 39);
-				event.TicketPrice = stod(currentReadName.substr(42,45));
-				event.TicketQuantity = stoi(currentReadName.substr(46,52));
+				event.TicketPrice = stod(currentReadName.substr(44,50));
+				event.TicketQuantity = stoi(currentReadName.substr(40,43));
                 return true;
         	} else {
 			}
@@ -292,7 +292,7 @@ void Transaction::sell(User sellerAccount){
 	event.setEventSeller(sellerAccount.getUserName());
 
 //Checks if the Account is a Buy-Standard Account
-while(sellerAccount.getAccountType() != "BS"){ 
+if(sellerAccount.getAccountType() != "BS"){ 
     cout << "Enter the Event Title: ";
     getline(cin, eventTitle, '\n');
     //Checks if the event name has been inputted or if the input is less or equal to 25 characters
@@ -316,6 +316,7 @@ while(sellerAccount.getAccountType() != "BS"){
 				transactionresult = "03 " + event.getEventTitle() +  " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + formatDouble(event.getTicketPrice());
                 printTransaction(transactionresult);
 				cout << "Inputs were all Successful, You can now sell tickets for the event" << endl;
+				logout(sellerAccount);
             }
             else{
 				//Cancels Transaction
@@ -330,10 +331,12 @@ while(sellerAccount.getAccountType() != "BS"){
     else{
 		//Cancels Transaction
         cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Name." << endl;
-        }  
-    }
+    }  
+}
+else{
 	//Cancels Transaction
     cout << "This is a Buy-Standard Account. Please Try Another Transaction" << endl;
+	}
 }
 
 //Method: buy
@@ -345,7 +348,7 @@ void Transaction::buy(User buyerAccount){
     User seller;
 
 //Checks if the Account is a Sell-Standard Account
-while(buyerAccount.getAccountType() != "SS"){
+if(buyerAccount.getAccountType() != "SS"){
     cout << "Enter the Title of the Event: ";
     getline(cin, eventname, '\n');
     //Checks if the event name has been inputted or if the input is less or equal to 25 characters
@@ -372,7 +375,7 @@ while(buyerAccount.getAccountType() != "SS"){
                 	if((ticketQuantity.empty() != true && stoi(ticketQuantity) <= 4) || (buyerAccount.getAccountType() == "AA" && ticketQuantity.empty() != true)){
 						double totalPrice = (stod(ticketQuantity) * event.getTicketPrice());
 						//Checks if the event has any tickets remaining
-						if(event.getTicketQuantity() != 0){
+						if(event.getTicketQuantity() >= stoi(ticketQuantity)){
 							string confirm;
 							//Asks the buyer for confirmation of transaction
 							cout << "Would you like to Continue the Payment?: [yes/no]";
@@ -388,6 +391,8 @@ while(buyerAccount.getAccountType() != "SS"){
 									transactionresult = "04 " + event.getEventTitle() + " " + event.getEventSeller() + " " + to_string(event.getTicketQuantity()) + " " + formatDouble(event.getTicketPrice());  
 									printTransaction(transactionresult);
 									cout << "Transaction Done" << endl;
+									cout << "Tickets Bought for " + eventname + ": " + ticketQuantity << endl;
+									cout << "Tickets Remaining for " + eventname + ": " + to_string(remainingTickets) << endl;
 								}
 								else{
 										//Cancels Transaction
@@ -401,7 +406,7 @@ while(buyerAccount.getAccountType() != "SS"){
 						}
 						else{
 							//Cancels Transaction
-							cout << "ERROR: No More Tickets. Try Another Event" << endl;
+							cout << "ERROR: Either No More Tickets OR Low on Stock. Try Again OR Try Another Event" << endl;
 						}
                 	}
                 	else{
@@ -432,10 +437,12 @@ while(buyerAccount.getAccountType() != "SS"){
     else{
 		//Cancels Transaction
         cout << "ERROR: Either no Input OR Exceeded Maximum Length for Event Name." << endl;
-        }
     }
+}
+else{
 	//Cancels Transaction
     cout << "This is a Sell-Standard Account. Please Try Another Transaction" << endl;
+	}
 }
 
 //Method: refund
