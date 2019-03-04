@@ -10,15 +10,19 @@ for t in "AddCreditInputs" "BuyInput" "CreateInput" "DeleteInput" "LoginInput" "
 				#echo "$i"
 				# cat "$i"
 				echo "${i%.input}" > tempTran.trn
+				#input the data from the input files into the c++ program
 				cat "$i" | ./output tempTran.trn > out.out
 		done    
 done
+#loop through all the folders in the output dir
 for j in "AddCreditOutputs" "BuyOutput" "CreateOutput" "DeleteOutput" "LoginOutput" "LogoutOutput" "RefundOutput" "SellOutput"
 	do	
 		echo "Checking tests for: $j"
+		#loop through each of the test outputs 
 		for h in ../Tests/Results/$j/*.output
 			do	
-				echo "$out.out"
+				#echo "$out.out"
+				#check if the out.out file is the same as the test outputs
 				if diff out.out $h;
 				then 
 					echo "test $j good"
